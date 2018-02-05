@@ -1,0 +1,32 @@
+h1{
+	color: #ff0000;
+	font-size: 0.333333rem;
+}
+.content{
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	font-size: 0.333333rem;
+	margin-bottom: 1.388888rem;
+}
+.text{
+	width: 100%;
+	height: 100%;	
+	margin-left: 0.666666rem;
+    margin-top: 0.347222rem;
+}
+.text1{
+	margin-top: 0.902777rem;	
+}
+.text ul{
+	width: 80%;
+	
+}
+.text ul li{
+	margin-top: 0.180555rem;
+	list-style: decimal;
+	color: #FF0000;
+}
+.text ul li p{	
+	color: #000;
+}

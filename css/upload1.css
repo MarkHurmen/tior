@@ -1,0 +1,199 @@
+.content{
+	width: 100%;
+	height:auto;
+	background: url(../image/bg-realName.png) no-repeat center;
+	background-size: 100% 100%;
+	overflow: hidden;
+}
+.content .workName{
+	width: 8.335555rem;
+	height: 1.222222rem;
+	margin: 0 auto;
+	margin-top: 0.694444rem;
+}
+.content .workName input{
+	width: 96%;
+	height: 1.222222rem;
+	font-size: 0.361111rem;
+	padding-left: 0.333333rem;
+	border-radius: 0.069444rem;
+	color: #000;
+}
+.content .upload{
+	width: 8.75rem;
+	height: 6.347222rem;
+	margin: 0 auto;
+	margin-top: 0.833333rem;
+	background: url(../image/upload1.png) no-repeat center;
+	background-size: 100% 100%;
+}
+.content .upload .studentCard{
+	font-size: 0.472222rem;
+	color: #fcfb03;
+	text-align: center;
+	line-height: 1rem;
+	text-shadow:0 0 0.055555rem #b400da,
+                -0 -0 0.055555rem #b400da;
+    opacity: 75%;  
+/*     padding-top: 0.361111rem;  */
+}
+.content .upload .uploadBtn{
+	text-align: center;
+}
+.content .upload .uploadBtn .sham{
+	width: 100%;
+	height: 0.394444rem;
+}
+.content .upload .uploadBtn .ajaxImg{
+	position: absolute;
+    width: 2rem;
+    height: 2rem;
+    opacity: 0;
+}
+.content .upload .uploadBtn .ajaxImg1{	
+    width: 2rem;
+    height: 2rem;
+}
+.content .upload .uploadBtn .ajaxImg2{	
+    width: 8.166666rem;
+    height: 4.638888rem;
+}
+.content .upload .uploadBtn .ajaxImg3{
+	position: absolute;
+    width: 8.166666rem;
+    height: 4.638888rem;
+    opacity: 0;
+}
+.content .upload .lookBtn{	
+	line-height: 0.305555rem;
+	margin-top: 0.666666rem;
+	margin-bottom: 0.5rem;
+}
+.content .upload .lookBtn a{
+	text-decoration: underline;
+	font-size: 0.305555rem;
+	color: #ca6cfe;
+}
+.content .photoRequest{
+	width: 8.527777rem;
+	height: 2.722222rem;
+	margin: 0 auto;
+	background: url(../image/photorequest2.png) no-repeat center;
+	background-size: 100% 100%;
+	margin-top: 0.833333rem;
+}
+.content .photoRequest .explain{
+	margin-left: 0.513888rem;
+	margin-right: 0.513888rem;
+	padding-top: 0.555555rem;
+}
+.content .photoRequest .explain p{
+	color: #fcfb03;
+	font-size: 0.361111rem;
+}
+.content .photoRequest .explain span{
+	display: inline-block;
+	padding-top: 0.333333rem;
+	color: #fcfb03;
+	font-size: 0.305555rem;
+	line-height: 0.458333rem;
+}
+.content .nextBtn{
+	width: 100%;
+	margin-top: 1rem;
+	margin-bottom: 0.555555rem;
+}
+.content .nextBtn .mainBtn{
+	width: 100%;
+	font-size: 0.472222rem;
+	height: 1.25rem;
+	line-height: 1.097222rem;
+	color: #4A288E;
+	text-align: center;
+	background: url(../image/btn-realName1.png) no-repeat center;
+}
+.content .nextBtn .mainBtnInvalid{
+	width: 100%;
+	font-size: 0.472222rem;
+	height: 1.25rem;
+	line-height: 1.097222rem;
+	color: #4A288E;
+	text-align: center;
+	background: url(../image/btn-realName2.png) no-repeat center;
+}
+#sample{
+	position: absolute;
+    top: 20%;
+    left: 9%;
+    z-index: 1222;
+}
+.sample{
+	width: 100%;
+}
+.sample img{
+	display: block;
+	margin:  0 auto;
+}
+.sample .closeBtn{
+	width: 0.833333rem;
+    height: 0.833333rem;
+	margin-bottom: 0.222222rem;
+	margin-left: 7.388888rem;
+}
+.sample .example{
+    width: 8.111111rem;
+    height: 4.222222rem;
+}
+.sample .example img{
+    width: 8.111111rem;
+    height: 4.222222rem;
+} 
+/*审核状态*/
+.content .examineState{
+	width: 8.75rem;
+	height: 2.597222rem;
+	margin: 0 auto;
+	background: url(../image/bg-examine.png) no-repeat center;
+	background-size:100% 100%;
+	margin-top: 4.222222rem;
+}
+.content .examineState p{
+	width: 100%;
+	height: 100%;	
+	text-align: center;	
+	color: #fded74;
+	font-size: 0.361111rem;
+}
+.content .examineState p span:first-child{
+	margin-top: 0.833333rem;
+}
+.content .examineState p .wait{
+	display: inline-block;
+	width: 100%;
+	line-height: 2.597222rem;
+	margin: 0 !important;
+}
+.content .examineState p span{
+	display: inline-block;
+	width: 100%;
+	text-align: center;	
+	color: #fded74;
+	font-size: 0.361111rem;
+}
+
+.backhome {
+	width: 100%;
+	margin-top: 2.083333rem;
+}
+.backhome .mainBtn{
+	width: 3.541666rem;
+	margin: 0 auto;
+	font-size: 0.472222rem;
+	height: 1.25rem;
+	line-height: 1.097222rem;
+	color: #4A288E;
+	text-align: center;
+	background: url(../image/btn-backHome.png) no-repeat center;
+	background-size: 100% 100%;
+}
+ 

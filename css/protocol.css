@@ -1,0 +1,95 @@
+h1{
+	color: #ff0000;
+	font-size: 0.333333rem;
+}
+.title{
+	font-size: 0.5rem;
+    text-align: center;
+    margin-bottom: 0;
+}
+.content{
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	font-size: 0.333333rem;
+}
+.text{
+	width: 100%;
+	height: 100%;	
+	margin-left: 0.666666rem;
+    margin-top: 0.347222rem;
+}
+
+.text ul{
+	width: 80%;
+	
+}
+.text ul li{
+	margin-top: 0.180555rem;
+	list-style: decimal;
+	color: #FF0000;
+}
+.explain li{
+    list-style: none !important;
+}
+.text ul li p{	
+	color: #000;
+}
+.agree{
+	width: 100%;
+    height: 1rem;
+    line-height: 1rem;
+    margin: 0 auto;
+    text-align: center;
+    
+}
+.agree img{
+    vertical-align: middle;
+}
+.registerBtn {
+    width: 95%;
+    height: 100%;
+    margin: 0 auto;
+}
+.registerBtn .mainBtn {
+    width: 100%;
+    height: 1.222222rem;
+    font-size: 0.472222rem;
+    line-height: 1.222222rem;
+    color: #fff;
+    text-align: center;
+    background: url(../image/btn_register1.png) no-repeat center;
+    background-size: 100% 100%;
+}
+.registerBtn .mainBtnInvalid {
+    width: 100%;
+    height: 1.222222rem;
+    font-size: 0.472222rem;
+    line-height: 1.222222rem;
+    color: #979797;
+    text-align: center;
+    background: url(../image/btn_register2.png) no-repeat center;
+    background-size: 100% 100%;
+}
+.shade1 {
+    width: 71.66%;
+    height: auto;
+    padding-top: 0.277777rem;
+    padding-bottom: 0.277777rem;
+    background:#000;
+    opacity:0.8;
+    color: #fff;
+    border-radius: 0.138888rem;
+    position: absolute;
+    top: 7.777777rem;
+    left: 14%;
+	display: none;
+}
+.shade1 > p {
+	 width: 80%;
+	 height: auto;
+	 font-size: 0.472222rem;
+	 margin: 0.305555rem auto;
+	 text-align: center;
+	 word-wrap:break-word;
+} 

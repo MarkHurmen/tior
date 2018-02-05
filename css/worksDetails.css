@@ -1,0 +1,273 @@
+.content{
+	width: 100%;
+	height: auto;	
+	background: url(../image/bg-fills.png) repeat center;
+	background-size: 100% 100%;
+	overflow: hidden;  
+}
+.content .bgposter{
+	width: 93.89%;
+	height: 2.972222rem;
+	margin-left: 3.06%;
+	background: #b5a9bf;
+	opacity: 0.4;
+	border-radius: 0.138888rem;
+	margin-top: 0.194444rem;
+}
+.numSear{
+	width: 1.194444rem;
+	height: 1.166666rem;
+	background: url(../image/details1.png) no-repeat center;
+	background-size: 100% 100%;
+	position: absolute;
+	top: 0.083333rem;
+	right: 0.083333rem;
+	color: #fcfb03;
+	font-size: 0.305555rem;
+	text-align: center;
+	line-height: 1.166666rem;
+	z-index: 1002;
+}
+.content .poster{
+	width: 93.89%;
+	height: 2.972222rem;
+	border-radius: 0.138888rem;
+	overflow: hidden;
+	position: absolute;
+	top: 0.194444rem;
+	left: 3.06%;
+	z-index: 222;
+}
+
+.content .poster .message{ 
+	width: 43%;
+	margin: 0 auto;
+	float: left;
+	margin-top: 0.638888rem;
+	margin-left: 0.527777rem;
+}
+.content .poster .message p{ 
+	width: 100%;
+	color: #fff;
+	margin-bottom: 0.277777rem;
+	letter-spacing: 0.027777rem;
+	font-size: 0.305555rem;
+}
+.content .poster .message p span{ 
+	padding-left: 0.111111rem;
+	color: #FCFB03;
+}
+.content .poster .photo{ 
+	width: 4.555555rem;
+	height: 2.597222rem;
+	margin: 0 auto;
+	float: right;
+	margin-top: 0.194444rem;
+	margin-right: 0.194444rem;
+}
+.content .poster .photo p{ 
+	width: 100%;
+	height: 100%;	
+	position: relative;
+}
+.content .poster .photo img{ 
+	width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.content .bgdetails{
+	width: 100%;
+	height: 6.944444rem;
+	background: #b5a9bf;
+	opacity: 0.4;
+	border-radius: 0.138888rem;
+	margin-top: 0.194444rem;
+}
+.content .details{
+	width: 100%;
+	height: 6.555555rem;
+	margin-top: 0.194444rem;
+	position: absolute;
+    top: 3.402777rem;
+}
+.content .details p{
+	width: 100%;
+	height: 100%;
+	margin-bottom: 0.194444rem;
+	margin-top: 0.194444rem;
+}
+.content .details p img{
+	width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.content .details .details_p{
+	width: 8.777777rem;
+	height: 0.666666rem;
+	margin: 0 auto;
+	line-height: 0.666666rem;	
+}
+.content .details .details_p span{
+	color: #fff;
+	font-size: 0.305555rem;
+	display: inline-block;
+}
+.content .details .details_p .state{
+	float: right;
+}
+.content .details .details_p .state i{
+	color: #fcfb03;
+}
+.designConcept{
+	width: 100%;
+	height: 8.041666rem;
+	background: url(../image/details2.png) no-repeat center;
+	background-size: 100% 100%;
+	overflow: hidden;
+	position: relative;
+}
+.designConcept .designText1{
+	width: 7rem;
+	margin: 0 auto;
+	margin-top: 1.333333rem;
+	text-align: left;
+	font-size: 0.305555rem;
+	letter-spacing:0.027777rem;
+}
+.designConcept .designText2{
+	width: 7rem;
+	position: absolute;
+	top: 4.791666rem;
+	left: 14%;
+	text-align: left;
+	font-size: 0.305555rem;
+	letter-spacing:0.027777rem;
+}
+.corpspic{
+	width: 100%;
+	height: 100%;
+	margin: 0 auto;
+	background: url(../image/bg-myCorps.png) no-repeat center;
+	background-size: 100% 100%;
+    margin-top: -0.416666rem;
+    padding-top: 0.416666rem;
+}
+.content .contest_reward{
+	width: 2.972222rem;
+	height: 0.597222rem;
+	margin: 0 auto;
+	margin-top: 0.277777rem;
+	background: url(../image/bg-all.png) no-repeat center;
+	background-size: 100% 100%;
+	margin-bottom: 0.416666rem;
+}
+.content .contest_reward p{	
+	font-size: 0.305555rem;
+	color: #ca6cfe;
+	text-align: center;
+	line-height: 0.597222rem;
+}
+.content .nextBtn{
+	width: 100%;
+	margin-bottom: 0.805555rem;
+}
+.content .remarks1{
+	margin-top: 0;
+	margin-bottom: 0;
+}
+.content .nextBtn .mainBtn{
+	width: 7.777777rem;
+	height: 1.25rem;
+	font-size: 0.472222rem;
+	margin: 0 auto;
+	line-height: 1.097222rem;
+	color: #4A288E;
+	text-align: center;
+	background: url(../image/btn-realName1.png) no-repeat center;
+	background-size: 100% 100%;
+}
+.content .nextBtn .mainBtnInvalid{
+	width: 7.777777rem;
+	height: 1.25rem;
+	font-size: 0.472222rem;
+	margin: 0 auto;
+	line-height: 1.097222rem;
+	color: #4A288E;
+	text-align: center;
+	background: url(../image/btn-realName2.png) no-repeat center;
+	background-size: 100% 100%;
+}
+.content .remarks{
+	width: 100%;
+	margin-top: 0.25rem;
+	margin-bottom: 0.805555rem;
+	font-size: 0.305555rem;
+	color: #ff0000;
+	text-align: center;
+}
+#backImg {
+    width: 8.347222rem;
+    height: 5.197222rem;
+    position: absolute;
+    top: 11.472222rem;
+    left: 0.833333rem;
+    z-index: 1222;
+}
+.mask_img{
+	display:block;
+	width:auto;
+	height:auto;
+	max-width:100%;
+	max-height:100%;
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform:translate(-50%,-50%);
+	z-index:1023
+}
+.loginSuccess {
+    width: 8.361111rem;
+    height: 4.111111rem;
+    position: absolute;
+    left: 8%;
+    top: 6rem;
+    background: url(../image/bg-password.png) no-repeat center;
+    background-size: 100% 100%;
+    z-index: 1027;
+}
+.loginSuccess .m_register{
+	height: 2.95rem;
+	text-align: center;
+    font-size: 0.416666rem;
+}
+.loginSuccess .m_register .m_suc{
+	line-height: 1.8rem;
+}
+.loginSuccess .choice {
+    width: 100%;
+    height: 1.152777rem;
+    font-size: 0.416666rem;
+    text-align: center;
+}
+.loginSuccess .choice span {
+	display: block;
+    width: 50%;
+    float: left;
+    height: 1.152777rem;
+    line-height: 1.152777rem;
+    text-align: center;
+}
+.loginSuccess .choice .renameBtn {
+    border-radius: 0 0 0.208333rem 0;
+    background: #4dd9fb;
+}

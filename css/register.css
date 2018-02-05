@@ -1,0 +1,282 @@
+html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code, del, dfn, em, img, b, u, i, 
+center, dl, dt, dd, ol, ul, li,
+fieldset, form, label, table, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, footer, header, nav, section,input  {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: 0;
+    font-size: 100%;
+    font: inherit;
+    font-family: "微软雅黑";
+    vertical-align: baseline;
+}
+ol, ul {
+    list-style: none;
+}
+html{
+	width: 100%;
+	
+}
+body{
+	width: 100%;
+	background: #fff;
+}
+.phone {
+	width: 100%;
+	height: auto;
+	overflow: hidden;	 
+}
+#verification{
+	width: 100%;
+	font-size: 0.305555rem;
+	color: #000000;
+	padding-top: 0.444444rem;
+	text-align: center;
+}
+.content{
+	width: 100%;
+	height: auto;
+}
+.content ul{
+	width: 9.333333rem;
+	height: 100%;
+	margin: 0 auto;
+	margin-top: 0.861111rem;
+}
+.content ul li{
+	width: 100%;
+	height: 1.361111rem;
+	border-bottom: 1px solid #e4e4e4;
+}
+.content ul li input{
+	width: 75%;
+	float: left;
+	height: 1.361111rem;
+	padding-left: 0.138888rem;
+	font-size: 0.416666rem;
+}
+.content #obtainBtn{
+	width: 23%;
+	float: left;
+	margin-top: 0.347222rem;
+	height: 0.652777rem;
+	border: 0.013888rem solid #4dd9fb;
+	background: #4dd9fb;
+	font-size: 0.361111rem;
+	color: #000;
+	text-align: center;
+	border-radius: 0.069444rem;
+}
+.content #potoImg{
+	width: 23%;
+	float: left;
+	margin-top: 0.347222rem;
+	height: 0.652777rem;
+	border: 0.013888rem solid #4dd9fb;
+	background: #4dd9fb;
+	font-size: 0.361111rem;
+	color: #000;
+	text-align: center;
+	border-radius: 0.069444rem;
+}
+.content #password input{
+	width: 80%;
+	float: left;
+	height: 1.361111rem;
+}
+.content #password p{
+	width: 18%;
+	float: left;
+	line-height: 1.361111rem;
+	text-align: center;
+}
+.content .registerBtn{
+	width: 9.333333rem;
+	height: 100%;	
+	margin: 0 auto;
+	margin-top: 0.833333rem;
+}
+.content .registerBtn .mainBtn{
+	width: 9.333333rem;
+	height: 1.222222rem;
+	font-size: 0.472222rem;
+	margin: 0 auto;
+	margin-top: 0.777777rem;
+	line-height: 1.222222rem;
+	color: #fff;
+	text-align: center;
+	background: url(../image/btn_register1.png) no-repeat center;
+	background-size: 100% 100%;
+	text-shadow: 0.013888rem; 
+	
+}
+.content .registerBtn .mainBtnInvalid{
+	width: 9.333333rem;
+	height: 1.222222rem;
+	font-size: 0.472222rem;
+	line-height: 1.222222rem;
+	color: #979797;
+	text-align: center;
+	background: url(../image/btn_register2.png) no-repeat center;
+	background-size: 100% 100%;
+}
+.content .forget{
+	width: 9.333333rem;
+	color: #A3D9CB;
+	font-size: 0.361111rem;
+	margin: 0 auto;
+	margin-top: 0.388888rem;
+	text-align: left;
+	line-height: 0.486111rem;
+}
+.content .forget .forgetBtn{
+	width: 20%;
+	float: left;
+}
+.content .forget .register{
+	width: 10%;
+	float: right;
+	text-align: center;
+}
+.content .forget img{
+	float: left;
+	margin-right: 0.138888rem;
+}
+.content .forget .agree {
+	line-height: 0.375rem;
+}
+.content .forget .agree .agree_deal{
+	color: #fc3734;
+}
+
+.incorrect{
+	width: 7.166666rem;
+	height: 1.638888rem;
+	background: rgba(0,0,0,.65);
+	margin: 0 auto;
+	margin-top: 1.555555rem;
+	border-radius: 0.138888rem;
+}
+.incorrect p{
+	width: 100%;
+	color: #fff;
+	text-align: center;
+	line-height: 1.638888rem;
+	font-size: 0.472222rem;
+}
+.passwordRetrieval{
+	width: 8.361111rem;
+	height: 4.111111rem;
+	margin: 0 auto;
+	background: url(../image/bombBox.png) no-repeat center;
+}
+.forgotPassword{
+	width: 8.361111rem;
+    height: 4.111111rem;
+    position: absolute;
+    left: 8%;
+    top: 6rem;
+    background: url(../image/bg-password.png) no-repeat center;
+    background-size: 100% 100%;
+    z-index: 1027;
+}
+.forgotPassword p{
+	width: 100%;
+	height: 2.944444rem;
+	font-size: 0.472222rem;
+	line-height: 2.944444rem;
+	text-align: center;
+	border-bottom: 1px solid #e4e4e4;
+}
+.forgotPassword .choice{
+	width: 100%;
+	height: 1.152777rem;
+	font-size: 0.416666rem;
+	text-align: center;
+}
+.forgotPassword .choice span{
+	width: 4.180555rem;
+	height: 1.152777rem;
+	display: inline-block;
+	line-height: 1.152777rem;
+	text-align: center;
+}
+.forgotPassword .choice .choiceBtn{
+	width: 4.055555rem;
+	border-radius: 0 0 0.208333rem 0;
+	background: #4dd9fb;
+}
+.loginSuccess{
+	width: 8.361111rem;
+    height: 4.111111rem;
+    position: absolute;
+    left: 8%;
+    top: 6rem;
+    background: url(../image/bg-password.png) no-repeat center;
+    background-size: 100% 100%;
+    z-index: 1027;
+}
+.loginSuccess p{
+	width: 100%;
+	height: 2.944444rem;
+	font-size: 0.472222rem;
+	line-height: 2.944444rem;
+	text-align: center;
+	border-bottom: 1px solid #e4e4e4;
+}
+.loginSuccess .choice{
+	width: 100%;
+	height: 1.152777rem;
+	font-size: 0.416666rem;
+	text-align: center;
+}
+.loginSuccess .choice span{
+	width: 49%;
+	height: 1.152777rem;
+	display: inline-block;
+	line-height: 1.152777rem;
+	text-align: center;
+}
+.loginSuccess .choice .choiceBtn{
+	width: 49%;
+	border-radius: 0 0 0.208333rem 0;
+	background: #4dd9fb;
+}
+.loginSuccess .choice .renameBtn{
+	width: 4.055555rem;
+	border-radius: 0 0 0.208333rem 0;
+	background: #4dd9fb;
+}
+
+.mask {       
+    position: absolute; top: 0px; 
+    filter: alpha(opacity=60); 
+    background-color: #777;     
+    z-index: 1002; 
+    left: 0px;     
+    opacity:0.5; 
+    -moz-opacity:0.5;     
+} 
+.shade {
+    width: 71.66%;
+    height: auto;
+    margin: 0 auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background:#ccc;
+    opacity:0.9;
+    border: 1px solid #00000;
+    border-radius: 10px;
+    margin-top:  0.416666rem;
+    display:none;
+}
+.shade > p {
+	 width: 80%;
+	 height: auto;
+	 font-size: 0.472222rem;
+	 margin: 0.305555rem auto;
+	 text-align: center;
+	 word-wrap:break-word;
+}     

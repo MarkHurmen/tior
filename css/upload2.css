@@ -1,0 +1,213 @@
+.content{
+	width: 100%;
+	height: auto;
+	overflow: hidden;
+}
+.content .upload{
+	width: 8.75rem;
+	height: 7.638888rem;
+	margin: 0 auto;
+	margin-top: 0.833333rem;
+	background: url(../image/upload3.png) no-repeat center;
+	background-size: 100% 100%;
+}
+.content .upload .studentCard{
+	font-size: 0.472222rem;
+	color: #fcfb03;
+	text-align: center;
+	line-height: 1rem;
+	text-shadow:0 0 0.055555rem #b400da,
+                -0 -0 0.055555rem #b400da;
+}
+.content .upload .uploadBtn{
+	text-align: center;
+}
+.content .upload .uploadBtn .sham{
+	width: 100%;
+	height: 0.394444rem;
+}
+.content .upload .uploadBtn .ajaxImg{
+	position: absolute;
+    width: 2rem;
+    height: 2rem;
+    opacity: 0;
+}
+.content .upload .uploadBtn .ajaxImg1{	
+    width: 2rem;
+    height: 2rem;
+}
+.content .upload .uploadBtn .ajaxImg2{	
+    width: 8.166666rem;
+    height: 5.638888rem;
+}
+.content .upload .uploadBtn .ajaxImg3{
+	position: absolute;
+    width: 8.166666rem;
+    height: 5.638888rem;
+    opacity: 0;
+}
+.content .upload .lookBtn{	
+	line-height: 0.305555rem;
+	margin-top: 1.055555rem;
+	margin-bottom: 0.777777rem;
+}
+.content .upload .lookBtn a{
+	text-decoration: underline;
+	font-size: 0.305555rem;
+	color: #ca6cfe;
+}
+.content .photoRequest{
+	width: 8.527777rem;
+	height: 3.777777rem;
+	margin: 0 auto;
+	background: url(../image/photorequest1.png) no-repeat center;
+	background-size: 100% 100%;
+	margin-top: 0.833333rem;
+}
+.content .photoRequest .explain{
+	margin-left: 0.555555rem;
+	padding-top: 0.555555rem;
+}
+.content .photoRequest .explain p{
+	color: #fcfb03;
+	font-size: 0.361111rem;
+}
+.content .photoRequest .explain ul{
+	padding-top: 0.333333rem;
+	color: #fcfb03;
+	font-size: 0.305555rem;
+}
+.content .photoRequest .explain ul li{
+	line-height: 0.558333rem;
+}
+.content .nextBtn{
+	width: 100%;
+	margin-top: 1rem;
+	margin-bottom: 0.805555rem;
+}
+.content .nextBtn .mainBtn{
+	width: 100%;
+	font-size: 0.472222rem;
+	height: 1.25rem;
+	line-height: 1.097222rem;
+	color: #4A288E;
+	text-align: center;
+	background: url(../image/btn-realName1.png) no-repeat center;
+}
+.content .nextBtn .mainBtnInvalid{
+	width: 100%;
+	font-size: 0.472222rem;
+	height: 1.25rem;
+	line-height: 1.097222rem;
+	color: #4A288E;
+	text-align: center;
+	background: url(../image/btn-realName2.png) no-repeat center;
+}
+#sample{
+	position: absolute;
+    top: 9%;
+    left: 9%;
+    z-index: 1222;
+}
+.sample{
+	width: 100%;
+}
+.sample img{
+	display: block;
+	margin:  0 auto;
+}
+.sample .closeBtn{
+	margin-bottom: 0.222222rem;
+	margin-left: 7.388888rem;
+}
+
+/*审核状态*/
+.content .examineState{
+	width: 8.75rem;
+    margin: 0 auto;
+	height: 2.597222rem;
+	text-align: center;
+	background: url(../image/bg-examine.png) no-repeat center;
+	background-size: 100% 100%;
+	margin-top: 4.222222rem;
+}
+.content .examineState p{
+	width: 5.388888rem;
+	margin: 0 auto;
+	padding-top: 0.819444rem;
+	text-align: center;	
+	color: #fded74;
+	font-size: 0.361111rem;
+}
+.content .lookReason{
+	margin-top: 0.944444rem;
+	width: 100%;
+	text-align: center;
+}
+.content .lookReason a{	
+	color: #ca6cfe;
+	font-size: 0.305555rem;
+	text-decoration: underline;
+}
+
+.content .backhome {
+	width: 100%;
+	margin-top: 0.833333rem;
+}
+.content .backhome .mainBtn{
+	width: 3.541666rem;
+	margin: 0 auto;
+	font-size: 0.472222rem;
+	height: 1.25rem;
+	line-height: 1.097222rem;
+	color: #4A288E;
+	text-align: center;
+	background: url(../image/btn-backHome.png) no-repeat center;
+	background-size: 100% 100%;
+}
+.sample .failreason2{
+	width: 7.305555rem;
+	height: 7.861111rem;
+	background: #fff;
+	margin: 0 auto;
+}
+.sample .failreason2 h2{
+	width: 100%;
+	text-align: center;
+	padding-top: 0.638888rem;
+	color: #000;
+	font-size: 0.361111rem;
+}
+.sample .failreason2 p{
+	width: 100%;
+	padding-left: 0.555555rem;
+	padding-top: 0.972222rem;
+	padding-bottom: 0.277777rem;
+	color: #4b1587;
+	font-size: 0.305555rem;
+}
+
+.shade {
+    width: 71.66%;
+    height: auto;
+    margin: 0 auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background:#ccc;
+    opacity:0.9;
+    border-radius: 10px;
+    margin-top:  0.416666rem;
+    display:none;
+    z-index: 1222; 
+    position: absolute;
+    top: 30%;
+    left: 14%;
+}
+.shade > p {
+	 width: 80%;
+	 height: auto;
+	 font-size: 0.472222rem;
+	 margin: 0.305555rem auto;
+	 text-align: center;
+	 word-wrap:break-word;
+} 

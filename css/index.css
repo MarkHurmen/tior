@@ -1,0 +1,165 @@
+body{
+	width: 100%;
+    height: 100%;
+    background: url(../image/bg-fill1.png) repeat center;
+    background-size: 100% 100%;
+    overflow-y: scroll;
+}
+.homePage{
+	width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+.header{
+	width: 100%;
+	height: 5.569444rem;
+	background: url(../image/signUp_01.png) no-repeat center;
+	background-size: 100% 100%;	
+	overflow: hidden;
+}
+.header p{
+	width: 8%;
+	color: #fff;
+	margin-left: 8.7rem;
+	margin-top: 0.5rem;
+	font-size: 0.333333rem;
+	letter-spacing: 0.055555rem;
+}
+.content{
+	width: 100%;
+	height: auto;
+	background: url(../image/signUp_02.png) no-repeat center;
+	background-size: 100% 100%;
+	overflow: hidden;
+}
+.content .topImg{
+	width: 8.75rem;
+	height: 1.875rem;
+	margin: 0 auto;
+	margin-top: 0.638888rem;
+	background: url(../image/noticeUp.png) no-repeat center;
+	background-size: 100% 100%;
+	
+}
+.content .topImg p{
+	font-size: 0.472222rem;
+	color: #fcfb03;
+	text-align: center;
+	line-height: 1rem;
+	text-shadow:0 0 0.055555rem #b400da,
+                -0 -0 0.055555rem #b400da;            
+}
+.content .contentText{
+	width: 7.625rem;
+	height: 3.652778rem;
+	margin: 0 auto;	
+	padding-left: 0.275rem;
+	margin-top: -0.416666rem;
+}
+.content .contentText li{
+	width: 100%;
+	word-wrap: break-word;
+	font-size: 0.305555rem;
+	color: #fcfb03;
+	line-height: 0.55rem;
+	padding-right: 0.416666rem;
+}
+.content .bottomImg{
+	width: 8.75rem;
+	height: 1.527777rem;
+	margin: 0 auto;
+	background: url(../image/noticeDown.png) no-repeat center;
+	background-size: 100% 100%;	
+	margin-top: -1.527777rem;	
+}
+.content .contest_reward{
+	width: 2.541666rem;
+	height: 0.597222rem;
+	margin: 0 auto;
+	margin-top: 0.666666rem;
+	background: url(../image/bg-reward.png) no-repeat center;
+	background-size: 100% 100%;
+	margin-bottom: 0.722222rem;
+}
+.content .contest_reward p{	
+	font-size: 0.361111rem;
+	color: #ca6cfe;
+	text-align: center;
+	line-height: 0.597222rem;
+}
+.content .signUp{
+	width: 100%;
+	height: 2.569444rem;
+	background: url(../image/bgBtnDown.png) no-repeat center;
+	background-size: 100% 100%;	
+	overflow: hidden;
+}
+.content .signUp .mainBtn{
+	width: 7.777777rem;
+	height: 1.236111rem;
+	font-size: 0.472222rem;
+	margin: 0 auto;
+	margin-top: 0.777777rem;
+	line-height: 1rem;
+	color: #4a288e;
+	text-align: center;
+	background: url(../image/mainBtn1.png) no-repeat center;
+	background-size: 100% 100%;
+	text-shadow: 0.013888rem; 
+	
+}
+.content .signUp .mainBtnInvalid{
+	width: 7.777777rem;
+	height: 1.236111rem;
+	font-size: 0.472222rem;
+	line-height: 1rem;
+	color: #4a288e;
+	text-align: center;
+	background: url(../image/mainBtn2.png) no-repeat center;
+	background-size: 100% 100%;
+}
+
+#share{
+	width: 100%;
+	height: 3.555555rem;
+	position: absolute;
+	bottom: 84px;
+	left: 0;
+	background: #fff;
+}
+#share ul{
+	margin-left: 0.444444rem;
+	display: flex;
+	
+}
+#share ul li{
+	padding: 0 0.444444rem;
+	padding-top: 0.777777rem;
+}
+#share ul li p{
+	margin-top: 0.361111rem;
+	color: #000;
+	text-align: center;
+}
+.reward{
+	width: 8.361111rem;
+	height: 13.194444rem;;
+	margin: 0 auto;
+	position: absolute;
+	top: 4%;
+	left: 8%;
+	z-index: 1222;
+}
+.reward .rewardImg{
+	width: 100%;
+	height: 12.291666rem;
+} 
+.reward .rewardImg img{
+	width: 100%;
+	height: 12.291666rem;
+}
+.reward .closeImg{
+	margin-left: 7.847222rem;
+    margin-bottom: 0.069444rem;
+} 
+】

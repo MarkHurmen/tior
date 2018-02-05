@@ -1,0 +1,199 @@
+.content{
+	width: 100%;
+	height: 100%;	
+	overflow: hidden;  
+	overflow-y: scroll;
+}
+.content .ruleDescription{
+	width: 8.75rem;
+	margin: 0 auto;
+	height: 5.194444rem;
+	background: url(../image/description_works.png) no-repeat center;
+	background-size: 100% 100%;
+	margin-top: 0.694444rem;
+}
+.content .ruleDescription p{
+	width: 100%;
+	color: #fcfb03;
+	font-size: 0.472222rem;	
+	padding-top: 0.069444rem;
+	text-align: center;
+	line-height: 1rem;
+	text-shadow:0 0 0.055555rem #b400da,
+                -0 -0 0.055555rem #b400da;   
+}
+.content .ruleDescriptionText{
+	width: 100%;
+	height: 3.652778rem;	
+	padding-left: 0.875rem;
+	margin-top: 0.472222rem;
+}
+.content .ruleDescriptionText li{
+	width: 100%;
+	word-wrap: break-word;
+	font-size: 0.305555rem;
+	color: #fcfb03;
+	line-height: 0.45rem;
+	padding-right: 0.416666rem;
+	list-style: decimal;
+}
+.content .uploadWorks{
+	width: 8.75rem;
+	margin: 0 auto;
+	height: 6.347222rem;
+	background: url(../image/bg_personalData.png) no-repeat center;
+	background-size: 100% 100%;
+	margin-top: 0.527777rem;
+}
+.content .uploadWorks p{
+	width: 100%;
+	color: #fcfb03;
+	font-size: 0.472222rem;	
+	padding-top: 0.069444rem;
+	text-align: center;
+	line-height: 1rem;
+	text-shadow:0 0 0.055555rem #b400da,
+                -0 -0 0.055555rem #b400da;   
+}
+.content .uploadWorks .uploadWorksBtn{
+	width: 100%;
+	height: 5.347222rem;
+	text-align: center;
+	position: relative;
+}
+.content .uploadWorks .uploadWorksBtn .sham{
+	width: 100%;
+	height: 0.194444rem;
+}
+.content .uploadWorks .uploadWorksBtn .ajaxImg{
+	position: absolute;
+    width: 2rem;
+    height: 2rem;
+    opacity: 0;
+}
+.content .uploadWorks .uploadWorksBtn .ajaxImg1{	
+    width: 2rem;
+    height: 2rem;
+}
+.content .uploadWorks .uploadWorksBtn .ajaxImg2{	
+    width: 8.166666rem;
+    height: 4.638888rem;
+}
+.content .uploadWorks .uploadWorksBtn .ajaxImg3{
+	position: absolute;
+    width: 8.166666rem;
+    height: 4.638888rem;
+    opacity: 0;
+}
+.content .uploadWorks .uploadWorksBtn .lookBtn{	
+	line-height: 0.305555rem;
+	margin-top: 0.666666rem;
+	margin-bottom: 0.5rem;
+	font-size: 0.305555rem;
+	color: #ca6cfe;
+}
+.content .workName{
+	width: 8.638888rem;
+	height: 1.222222rem;
+	margin: 0 auto;
+	margin-top: 0.833333rem;
+}
+.content .workName input{
+	width: 100%;
+	height: 1.222222rem;
+	font-size: 0.361111rem;
+	padding-left: 0.333333rem;
+	border-radius: 0.069444rem;
+	color: #000;
+}
+.content .contactWay{
+	width: 8.638888rem;
+	height: 1.222222rem;
+	margin: 0 auto;
+	margin-top: 0.777777rem;
+	position: relative;
+}
+.content .contactWay input{
+	width: 100%;
+	height: 1.222222rem;
+	font-size: 0.361111rem;
+	padding-left: 0.333333rem;
+	border-radius: 0.069444rem;
+	color: #000;
+}
+.content .contactWay p{
+	position: absolute;
+    z-index: 222;
+    height: 100%;
+    top: 0;
+    left: 90%;
+    line-height: 1.222222rem;
+    width: 10%;
+    text-align: center;
+}
+.content .designConcept{
+	width: 8.638888rem;
+	height: 3.333333rem;
+	margin: 0 auto;
+	margin-top: 0.555555rem;
+}
+.content .designConcept textarea{
+	width: 100%;
+	height: 3.333333rem;
+	font-size: 0.361111rem;
+	padding-left: 0.333333rem;
+	padding-top: 0.277777rem;
+	border-radius: 0.069444rem;
+	color: #000;
+}
+.content .designConcept p{
+	color: #979797;
+	font-size: 0.361111rem;
+	padding-left: 7.444444rem;
+	margin-top: -0.625rem;
+}
+.content .reminder{
+	width: 100%;
+	height: 2.722222rem;
+	background: url(../image/photorequest2.png) no-repeat center;
+	margin-top: 0.833333rem;
+}
+.content .reminder .explain{
+	margin-left: 1.555555rem;
+	margin-right: 1.25rem;
+	padding-top: 0.555555rem;
+}
+.content .reminder .explain p{
+	color: #fcfb03;
+	font-size: 0.361111rem;
+}
+.content .reminder .explain span{
+	display: inline-block;
+	padding-top: 0.333333rem;
+	color: #fcfb03;
+	font-size: 0.305555rem;
+	line-height: 0.458333rem;
+}
+.content .nextBtn{
+	width: 100%;
+	margin-top: 1rem;
+	margin-bottom: 1.805555rem;
+}
+.content .nextBtn .mainBtn{
+	width: 100%;
+	font-size: 0.472222rem;
+	height: 1.25rem;
+	line-height: 1.097222rem;
+	color: #4A288E;
+	text-align: center;
+	background: url(../image/btn-realName1.png) no-repeat center;
+}
+.content .nextBtn .mainBtnInvalid{
+	width: 100%;
+	font-size: 0.472222rem;
+	height: 1.25rem;
+	line-height: 1.097222rem;
+	color: #4A288E;
+	text-align: center;
+	background: url(../image/btn-realName2.png) no-repeat center;
+}
