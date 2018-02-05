@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=no">
+    <title>作品详情</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css"/>  
+    <link rel="stylesheet" type="text/css" href="../css/worksDetails.css"/>
+    
+</head>
+<body >
+		
+	 	<div class="content">
+	 		<div class="bgposter">
+	 			
+	 		</div>
+	 		<div class="numSear"><span></span>票</div>
+	 		<div class="poster">
+	 			<div class="message">
+	 				<p>作品名称:<span id="myworkName"></span></p>
+	 				<p>当前状态:<span id="myworkSatyus"></span></p>
+	 				<p>作者姓名:<span id="author_span"></span></p>
+	 				<p style="display: none;">战队名称:<span id="myworkName"></span></p>
+	 			</div>
+	 			<div class="photo">
+	 				<p><img class="" src=""/></p>				
+	 			</div>
+	 		</div>
+			<div class="bgdetails">	 			
+	 		</div>
+	 		<div class="details">
+	 			<p><img class="" src=""/></p>
+	 		</div>
+	 		
+	 		
+	 		<div class="designConcept">
+	 			<p class="designText1"></p>
+	 			<p class="designText2"></p>
+	 		</div>
+	 		
+	 		<div class="contest_reward">
+				<p>查看全部作品</p>
+			</div>
+	 		<div class="nextBtn remarks1">
+				<p class="mainBtn">投他一票</p>
+	    		<p class="mainBtnInvalid" style="display: none;">投他一票</p>
+			</div>
+			<p class="remarks">注：每个人每天只有一次投票机会喔!</p>
+	 		
+	 	</div>
+	 	<div id="backImg" style="display: none;">
+			<img class="closeImg" src="../image/popup2.png" alt="" />
+			<div id="backgroundImg">			
+				<p class="pone">你需要先进行<span>实名认证</span>噢！</p>
+				<p class="ptwo"><span class="jump">马上去</span></p>
+			</div>
+		</div>
+		<div class="shade">
+	   		<p></p>
+		</div>
+		<div id="mask" class="mask"></div> 
+	 	<div class="shade1">
+	   		<p></p>
+		</div>
+	 	<div class="loginSuccess" style="display: none;">
+			<div class="m_register">
+				<p class="m_suc">投票成功</p>
+				<p class="m_btn">点击关注，马上开启你的璀璨新世界</p>
+			</div>
+			<div class="choice">
+				<span class="refs">下次再说</span>
+				<span class="renameBtn">马上关注</span>
+			</div>
+		</div>
+		<img  class="mask_img" src="" alt="" />
+</body>
+</html>
+<script src="../js/flexible.js"></script>
+<script src="../js/jquery-3.2.1.min.js"></script>
+<script src="../js/jweixin-1.2.0.js"></script>
+<script src="../js/api.js"></script> 
+<script src="../js/checkLogin.js"></script> 
+<script>
+(function () {
+	checkLogin()
+	var timer = null;
+	//大赛状态
+	 var joinStatus = function(param) {
+         if (param == 0) {
+             return '淘汰'
+         } else if (param == 1) {
+             return '海选'
+         } else if (param == 2) {
+             return '50强'
+         } else if (param == 3) {
+             return '10强'
+         } else if (param == 4) {
+             return '5强'
+         }
+     }
+	//获取Id
+	function getId(){
+	    var url = window.location.href;
+	    return url.split("#")[1];	
+	}
+	function search(){
+ 		xjcong.api.queryIdDesignsDetails({seasonCount:1,id:getId()},{},function(opt){
+ 			if(opt.success){
+ 				var data = opt.data;
+				$('#myworkNo').text(data.id);
+				$('#myworkName').text(data.worksName);
+				$('#myworkSatyus').text(joinStatus(data.joinStatus));
+				$('.numSear > span').text(data.ticketsCount)
+				$('.photo > p').children('img').attr('src',data.participantfile);
+				$('.designText2').text(data.designsIdea);
+				$('#author_span').text(data.participant.name);
+				$('.designText1').text(data.participant.declaration);
+				$('.details').children('p').children('img').attr('src',data.designsfilelist[0].filePath.path); 			
+ 			}else{
+ 				showMask();
+ 				$('#backImg').show();
+ 				$('.pone').children('span').remove();
+ 				$('.pone').css({'border-bottom':'none','line-height':'none'})
+ 				$('.ptwo').remove();
+ 				$('.pone').html(opt.errMsg);
+ 				
+ 			}
+ 		})	
+ 	}
+ 	search();
+ 	
+ 	//显示大图
+	$(".details > p > img").on("click",function() {
+		showMask();
+		$(".mask_img").css("display","block");	   
+		$(".mask_img").attr("src",$(this).attr('src'));
+
+		$(".mask_img").on("click",function() {
+			$(this).attr('src','')
+			$(this).css("display","none");
+			hideMask();
+		})
+	})
+	
+ 	//查看全部作品
+ 	$('.contest_reward').children('p').on('click',function(){
+ 		window.location.href="../index.html";  
+	});
+	if(getprm(2) == 'true'){
+		showMask();
+		$('.loginSuccess').show();
+	}
+	//下次再说
+	$('.refs').on('click',function(){
+		hideMask();
+		$('.loginSuccess').hide();
+	})
+	//马上关注
+	$('.renameBtn').on('click',function(){
+		window.location.href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzIzNTg2NzkyNw==&scene=124#wechat_redirect";
+	})
+ 	
+	$('.mainBtn').on('click',function(){ 
+		 xjcong.api.queryStatus({seasonCount:1,designsId:getId()},{},function(opt){
+			 if(opt.success){
+				 if(opt.flag == 1){
+					 toast('不好意思，你今天已经投过票了');
+					 $(".shade1").css('top','10.777777rem');
+				 }else{
+					 if(opt.data.checkFlag == 0){
+						 window.location.href="protocol.html#"+getId();
+					 }else{
+						 xjcong.api.vote({designsId:getId(),seasonCount:1},{},function(opt){
+							 if(opt.success){
+								 toast('投票成功！关注小金葱，跟进我们的后续活动哟~~');	
+								 $(".shade1").css('top','10.777777rem');
+							 }else{
+								 toast(opt.errMsg)
+				 				 $(".shade1").css('top','10.777777rem');
+							 }
+						 })	
+					 }
+				 }
+			 }else{
+				 toast(opt.errMsg)
+ 				 $(".shade1").css('top','10.777777rem');
+			 }
+		 })
+	});
+	
+	
+	
+	//分享页面代码
+	var appId = '';
+	var timestamp = '';
+	var nonceStr = '';
+	var signature = '';
+	var shareUrl = window.location.href;
+	var result = shareUrl.split("/view")[0];	
+	var imgUrl = result +'/image/share.png';
+	 $.post("/rest/matchs/matchShare?url="+shareUrl,function(data){
+		 appId = data.data.appId;
+		 timestamp = data.data.timestamp;
+		 nonceStr = data.data.nonceStr;
+		 signature = data.data.signature;
+		 
+		wx.config({
+		    appId: appId, 
+		    timestamp:timestamp, 
+		    nonceStr: nonceStr, 
+		    signature: signature,
+		    jsApiList: ['checkJsApi','onMenuShareAppMessage','onMenuShareTimeline','onMenuShareQQ','onMenuShareQZone'] 
+		});
+		
+		wx.ready(function(){
+			//分享给朋友		
+			wx.onMenuShareAppMessage({
+	    	    title: '小金葱送我10000元，能不能拿，就看你了', // 分享标题
+	    	    desc: '颜值与实力的对决~', // 分享描述
+	    	    link: window.location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+	    	    imgUrl: imgUrl, // 分享图标
+	    	    type: '', // 分享类型,music、video或link，不填默认为link
+	    	    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+	    	    success: function () { 
+	    	        // 用户确认分享后执行的回调函数	    	        
+	    	    },
+	    	    cancel: function () { 
+	    	        // 用户取消分享后执行的回调函数	    	        
+	    	    }
+	    	});
+			//分享给朋友圈
+			wx.onMenuShareTimeline({
+				title: '小金葱送我10000元，能不能拿，就看你了', // 分享标题
+				desc: '颜值与实力的对决~', // 分享描述
+			    link: window.location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+			    imgUrl: imgUrl, // 分享图标
+			    success: function () { 
+			        // 用户确认分享后执行的回调函数
+			    },
+			    cancel: function () { 
+			        // 用户取消分享后执行的回调函数
+			    }
+			});
+			//分享到QQ
+			wx.onMenuShareQQ({
+				title: '小金葱送我10000元，能不能拿，就看你了', // 分享标题
+				desc: '颜值与实力的对决~', // 分享描述
+			    link:  window.location.href, // 分享链接
+			    imgUrl: imgUrl, // 分享图标
+			    success: function () { 
+			       // 用户确认分享后执行的回调函数
+			    },
+			    cancel: function () { 
+			       // 用户取消分享后执行的回调函数
+			    }
+			});
+			//分享到QQ空间
+			wx.onMenuShareQZone({
+				title: '小金葱送我10000元，能不能拿，就看你了', // 分享标题
+				desc: '颜值与实力的对决~', // 分享描述
+			    link: window.location.href, // 分享链接
+			    imgUrl: imgUrl, // 分享图标
+			    success: function () { 
+			       // 用户确认分享后执行的回调函数
+			    },
+			    cancel: function () { 
+			        // 用户取消分享后执行的回调函数
+			    }
+			});
+		})		
+	}); 
+})()
+</script>
+

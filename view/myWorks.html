@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=no">
+    <title>我的作品</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/worksDetails.css"/>
+</head>
+<body >
+	 	<div class="content">
+	 		<div class="bgposter">	 			
+	 		</div>
+	 		<div class="numSear"><span></span>票</div>
+	 		<div class="poster">
+	 			<div class="message">
+	 				<p>作品名称:<span id="myworkName"></span></p>
+	 				<p>当前状态:<span id="myworkSatyus"></span></p>
+	 				<p>作者姓名:<span id="author_span"></span></p>
+	 				<p style="display: none;">战队名称:<span id="myworkName"></span></p>
+	 			</div>
+	 			<div class="photo">
+	 				<p><img class="" src=""/></p>	 				
+	 			</div>
+	 			
+	 		</div>
+			<div class="bgdetails">	 			
+	 		</div>
+	 		<div class="details">
+	 			<p><img class="" src=""/></p>
+	 		</div>
+	 		
+	 		
+	 		<div class="designConcept">
+	 			<p class="designText1"></p>
+	 			<p class="designText2"></p>
+	 		</div>
+	 		
+	 		<div class="contest_reward">
+				<p>查看全部作品</p>
+			</div>
+	 		<div class="nextBtn">
+				<p class="mainBtn">重新上传</p>
+	    		<p class="mainBtnInvalid" style="display: none;">重新上传</p>
+			</div>
+	 		
+	 	</div>
+	 	<div id="backImg" style="display: none;">
+			<img class="closeImg" src="../image/popup2.png" alt="" />
+			<div id="backgroundImg">			
+				<p class="pone">你需要先进行<span>实名认证</span>噢！</p>
+				<p class="ptwo"><span class="jump">马上去</span></p>
+			</div>
+		</div>
+		<div class="shade">
+	   		<p></p>
+		</div>
+		<div class="shade1">
+	   		<p></p>
+		</div>
+		<div id="mask" class="mask"></div> 
+	 	<img  class="mask_img" src="" alt="" />
+	 	
+	 	
+</body>
+</html>
+<script src="../js/flexible.js"></script>
+<script src="../js/jquery-3.2.1.min.js"></script>
+<script src="../js/jweixin-1.2.0.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/checkLogin.js"></script> 
+<script>
+(function () {
+	var timer = null;
+	//大赛状态
+	 var joinStatus = function(param) {
+       if (param == 0) {
+           return '淘汰'
+       } else if (param == 1) {
+           return '海选'
+       } else if (param == 2) {
+           return '50强'
+       } else if (param == 3) {
+           return '10强'
+       } else if (param == 4) {
+           return '5强'
+       }
+   }
+	function getId(){
+	    var url = window.location.href;
+	    return url.split("#")[1];	
+	}
+	
+	function search(){
+		xjcong.api.queryIdDesignsDetails({seasonCount:1,id:getId()},{},function(opt){
+			if(opt.success){
+				if(opt.flag == 1){
+ 					$('.mainBtn').hide();
+ 				}
+				var data = opt.data;
+				var path1 = data.designsfilelist[0].filePath.path;
+				var path2 = path1.split(".")[0];
+				var path3 = path1.split(".")[1];
+				var path = path2+'_compress.'+path3;
+				$('#myworkNo').text(data.id);
+				$('#myworkName').text(data.worksName);
+				$('#myworkSatyus').text(joinStatus(data.joinStatus));
+				$('.numSear > span').text(data.ticketsCount)
+				$('.photo > p').children('img').attr('src',data.participantfile);
+				$('.designText2').text(data.designsIdea);
+				$('#author_span').text(data.participant.name);
+				$('.designText1').text(data.participant.declaration);
+				$('.details').children('p').children('img').attr('src',data.designsfilelist[0].filePath.path); 	
+			
+			}else{
+				showMask();
+ 				$('#backImg').show();
+ 				$('.pone').children('span').remove();
+ 				$('.pone').html(opt.errMsg);
+ 				$('.pone').css({'border-bottom':'none','line-height':'none'})
+ 				$('.ptwo').remove();
+			}
+		})	
+	}
+	search();
+	
+// 	$('.mainBtn').on('click',function(){
+// 		showMask();
+// 		$('#backImg').show();
+// 		$('.pone').children('span').remove();
+// 		$('.pone').html('确定优化作品吗');
+// 		$(".ptwo").on('click',function(){
+// 			window.location.href="optimize_works.html#"+getId();  
+// 	    });	
+		
+// 	});
+	
+	$('.mainBtn').on('click',function(){
+		showMask();
+		$('#backImg').show();
+		$('#backImg').css('top','8.472222rem')
+		$('.pone').children('span').remove();
+		$('.pone').html('确定重新上传作品吗');
+		$(".ptwo").on('click',function(){
+			window.location.href="upload_works.html";  
+	    });	
+		
+	});
+	//显示大图
+	$(".details > p > img").on("click",function() {
+		showMask();
+		//$('.mask').css('z-index','1334')
+		$(".mask_img").css("display","block");	   
+		$(".mask_img").attr("src",$(this).attr('src'));
+
+		$(".mask_img").on("click",function() {
+			$(this).attr('src','')
+			$(this).css("display","none");
+			hideMask();
+		})
+	})
+	
+	
+	//查看全部作品
+ 	$('.contest_reward').children('p').on('click',function(){
+ 		window.location.href="../index.html"; 
+	});
+	
+	//分享页面代码
+	var appId = '';
+	var timestamp = '';
+	var nonceStr = '';
+	var signature = '';
+	var shareUrl = window.location.href;
+	var result = shareUrl.split("/view")[0];	
+	var imgUrl = result +'/image/share.png';
+	 $.post("/rest/matchs/matchShare?url="+shareUrl,function(data){
+		 appId = data.data.appId;
+		 timestamp = data.data.timestamp;
+		 nonceStr = data.data.nonceStr;
+		 signature = data.data.signature;
+		 
+		wx.config({
+		    appId: appId, 
+		    timestamp:timestamp, 
+		    nonceStr: nonceStr, 
+		    signature: signature,
+		    jsApiList: ['checkJsApi','onMenuShareAppMessage','onMenuShareTimeline','onMenuShareQQ','onMenuShareQZone'] 
+		});
+		
+		wx.ready(function(){
+			//分享给朋友		
+			wx.onMenuShareAppMessage({
+	    	    title: '小金葱送我10000元，能不能拿，就看你了', // 分享标题
+	    	    desc: '颜值与实力的对决~', // 分享描述
+	    	    link: window.location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+	    	    imgUrl: imgUrl, // 分享图标
+	    	    type: '', // 分享类型,music、video或link，不填默认为link
+	    	    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+	    	    success: function () { 
+	    	        // 用户确认分享后执行的回调函数	    	        
+	    	    },
+	    	    cancel: function () { 
+	    	        // 用户取消分享后执行的回调函数	    	        
+	    	    }
+	    	});
+			//分享给朋友圈
+			wx.onMenuShareTimeline({
+				title: '小金葱送我10000元，能不能拿，就看你了', // 分享标题
+				desc: '颜值与实力的对决~', // 分享描述
+			    link: window.location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+			    imgUrl: imgUrl, // 分享图标
+			    success: function () { 
+			        // 用户确认分享后执行的回调函数
+			    },
+			    cancel: function () { 
+			        // 用户取消分享后执行的回调函数
+			    }
+			});
+			//分享到QQ
+			wx.onMenuShareQQ({
+				title: '小金葱送我10000元，能不能拿，就看你了', // 分享标题
+				desc: '颜值与实力的对决~', // 分享描述
+			    link:  window.location.href, // 分享链接
+			    imgUrl: imgUrl, // 分享图标
+			    success: function () { 
+			       // 用户确认分享后执行的回调函数
+			    },
+			    cancel: function () { 
+			       // 用户取消分享后执行的回调函数
+			    }
+			});
+			//分享到QQ空间
+			wx.onMenuShareQZone({
+				title: '小金葱送我10000元，能不能拿，就看你了', // 分享标题
+				desc: '颜值与实力的对决~', // 分享描述
+			    link: window.location.href, // 分享链接
+			    imgUrl: imgUrl, // 分享图标
+			    success: function () { 
+			       // 用户确认分享后执行的回调函数
+			    },
+			    cancel: function () { 
+			        // 用户取消分享后执行的回调函数
+			    }
+			});
+		})		
+	}); 
+	
+})()	
+</script>
+

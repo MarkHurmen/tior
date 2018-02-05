@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=no">
+    <title>审核失败</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/realname_style.css"/>
+    <link rel="stylesheet" href="../css/upload2.css">   
+     
+</head>
+<body>
+	
+	 	<div class="content">
+	 		<div class="examineState">
+	 			<p>很抱歉，您的信息审核未通过，请重新上传资料</p>
+	 		</div>
+	 		<div class="lookReason">
+	 			<a>查看原因</a>
+	 		</div>
+	 		<div class="backhome">
+	 			<p class="mainBtn ">重新上传</p>
+	 		</div>
+	 	</div>
+	 	
+	 	<!--弹窗显示-->
+    	<div id="failreason2" style="display: none;">
+			<div class="sample">
+				<img class="closeBtn" src="../image/popup2.png"  alt="" />
+				<div class="failreason2">
+					<h2>手持学生证照片审核未通过</h2>
+					<p>标准样式</p>
+					<img src="../image/failreason2.png"/>
+				</div>				
+			</div>			
+		</div>
+		
+		<div id="mask" class="mask"></div>
+		<!-- 简单弹框提示 -->
+		<div class="shade">
+       		<p></p>
+		</div>
+		<div id="backImg" style="display: none;">
+			<img class="closeImg" src="../image/popup2.png" alt="" />
+			<div id="backgroundImg">			
+				<p class="pone"><span class="span1"></span></p>	
+				<p class="ptwo" style="display: none;"><span class="jump">马上去</span></p>			
+			</div>
+		</div>
+</body>
+</html>
+<script src="../js/flexible.js"></script>
+<script src="../js/jquery-3.2.1.min.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/checkLogin.js"></script> 
+<script>
+(function () {
+	$('.lookReason > a').on('click',function(){
+		xjcong.api.queryRefuseresion({seasonCount:1},{},function(opt){
+			if(opt.success){
+				showMask();
+				$('#backImg').show();
+				$('#backImg').css('top','3.472222rem');
+				$('.pone').css('border','none');
+				$('.pone > span').html(opt.otherMsg);			 
+			}
+		})	 	
+	})
+	$(".closeImg").on('click',function(){
+		$('#backImg').hide();
+	
+		hideMask();
+		
+    }); 
+	
+	$('.mainBtn').on('click',function(){
+		window.location.href="upload_works.html"; 	
+	})
+	
+	
+	
+})()	
+</script>

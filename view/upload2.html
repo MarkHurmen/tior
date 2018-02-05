@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=no">
+    <title>实名认证</title>
+     <link rel="stylesheet" type="text/css" href="../css/realname_style.css"/>
+    <link rel="stylesheet" href="../css/upload2.css">  
+</head>
+<body>
+	<form class="homePage">		
+	 	<div class="content">
+	 		<div class="upload">
+	 			<p class="studentCard">上传手持学生证</p>
+	 			<div class="uploadBtn">
+	 				<p class="lookBtn"><a>查看示例</a></p>
+	 				<p class="sham" style="display: none;"></p>
+	 				<input class="ajaxImg" id="file" type="file" name="cerfile" />
+	 				<img class="ajaxImg1" src="../image/btn-upload.png"/>
+	 				<img class="ajaxImg2" id="preview" src="" style="display: none;"/>
+	 			</div>	 			
+	 		</div>
+	 		<div class="photoRequest">
+	 			<div class="explain">
+	 				<p>照片要求</p>
+		 			<ul>
+		 				<li>1.本人头像清晰</li>
+		 				<li>2.学生证信息清晰</li>
+		 				<li>3.头部与学生证无重叠</li>
+		 				<li>4.需头发不遮耳朵，勿佩戴眼镜</li>
+		 			</ul>
+	 			</div>	 			
+	 		</div>
+	 		<div class="nextBtn">
+				<p class="mainBtn">下一步</p>
+	    		<p class="mainBtnInvalid" style="display: none;">下一步</p>
+			</div>
+	 	</div>
+		
+		<div id="sample" style="display: none;">
+			<div class="sample">
+				<img class="closeBtn" src="../image/popup2.png" alt="" />
+				<img src="../image/upload4.png"/>
+			</div>
+		</div>
+		<div id="backImg" style="display: none;">
+			<img class="closeImg" src="../image/popup2.png" alt="" />
+			<div id="backgroundImg">			
+				<p class="pone"></p>
+				<p class="ptwo"><span class="jump">马上去</span></p>				
+			</div>
+		</div>
+		<div class="shade">
+	   		<p></p>
+		</div>
+		<div class="shade1">
+	   		<p></p>
+		</div>
+		<div id="mask" class="mask"></div> 
+		<div id="loading" style="display:none" ><img alt="" src="../image/loading.gif"></div>
+	</form>
+</body>
+</html>
+<script src="../js/jquery-1.8.3.min.js"></script>
+<script src="../js/flexible.js"></script>
+<script src="../js/api.js"></script> 
+<script src="../js/checkLogin.js"></script>   
+<script src="../js/ajaxfileupload.js"></script>  
+<script src="../js/uploadImg1.js"></script>
+<script>
+(function () {
+	var timer1 = null;	
+	checkLogin();
+   //查看示例
+   $('.lookBtn').children().on('click',function(){
+	   showMask();
+       $("#sample").show();     
+   })
+   $('.closeBtn').on('click',function(){
+	   hideMask();
+       $("#sample").hide();     
+   }) 
+	
+	$('.mainBtn').on('click',function(){
+		if($('#preview').attr('src') == "" || $('#preview').attr('src') == undefined){
+			clearTimeout(timer1);
+			$(".shade1").show();
+			$(".shade1").css('top','6.77777rem');
+			$(".shade1 > p").html("请上传图片！");
+			timer1 = setTimeout(function() {
+				$(".shade1").hide();
+				$(".shade1 > p").html("");
+				clearTimeout(timer1);
+			}, 1000);
+		}else if($('#preview').attr('filepathId') == "" || $('#preview').attr('filepathId') == undefined){
+			clearTimeout(timer1);
+			$(".shade1").show();
+			$(".shade1").css('top','6.77777rem');
+			$(".shade1 > p").html("请刷新页面重新上传！");
+			timer1 = setTimeout(function() {
+				$(".shade1").hide();
+				$(".shade1 > p").html("");
+				clearTimeout(timer1);
+			}, 1000);
+		}else{
+			xjcong.api.addCertificationSecond({fileId:$('#preview').attr('filepathId')},{},function(opt){
+				if(opt.success){
+					clearTimeout(timer1);
+					showMask();
+					$(".shade").css("display","block");
+					$(".shade > p").html(opt.data);
+					timer1 = setTimeout(function() {
+						$(".shade").css("display","none");
+						clearTimeout(timer1);
+						window.location.href="realname_wait.html"; 
+					}, 1000);				
+				}else{
+					clearTimeout(timer1);
+					showMask();
+					$(".shade").css("display","block");
+					$(".shade > p").html(opt.errMsg);
+					timer1 = setTimeout(function() {
+						hideMask();
+						$(".shade").css("display","none");
+						clearTimeout(timer1);
+					}, 1000);
+				}
+			})	
+		}
+		
+	})	
+	
+})()	
+</script>

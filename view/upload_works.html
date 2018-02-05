@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=no">
+    <title>上传作品</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+    <link rel="stylesheet" href="../css/upload2.css">   
+    <link rel="stylesheet" type="text/css" href="../css/upload_works.css"/>
+   
+   
+</head>
+<body >
+	<form class="homePage">
+	 	<div class="content">
+	 		<div class="ruleDescription">
+	 			<p>规则说明</p>
+	 			<ul class="ruleDescriptionText">
+					<li>作品一图展示，常规A4纸尺寸</li>
+					<li>上传作品支持软件绘图和手绘制图</li>
+					<li>强烈建议上传作品的彩色扫描件</li>
+					<li>拍摄作品请选用清晰度较高的设备，以保证作品清晰度和质量，避免光线昏暗，反光效果强的环境</li>
+				</ul>
+	 		</div>
+	 		<div class="uploadWorks">
+	 			<p>上传作品</p>
+	 			<div class="uploadWorksBtn">
+	 				<ul class="shan"></ul>
+	 				<p class="sham"></p>
+	 				<input class="ajaxImg" id="file" type="file" name="cerfile" />
+	 				<img class="ajaxImg1" src="../image/btn-upload.png"/>
+	 				<img class="ajaxImg2" id="preview" src="" style="display: none;"/>
+	 			</div>
+	 		</div>
+	 		<div class="workName">
+	 			<input type="text" name="" id="worksName" value="" maxlength="7" placeholder="作品名称"/>
+	 		</div>
+	 		<div class="designConcept">
+	 			<textarea name="" rows="" id="designsIdea" cols="" maxlength="100" placeholder="请输入设计理念"></textarea>
+	 			<p><span class="account">0</span>/100</p>
+	 		</div>
+	 		<div class="nextBtn">
+				<p class="mainBtn">下一步</p>
+	    		<p class="mainBtnInvalid" style="display: none;">下一步</p>
+			</div>
+	 	</div>
+	 	
+	 	<div id="backImg" style="display: none;">
+			<img class="closeImg" src="../image/popup2.png" alt="" />
+			<div id="backgroundImg">			
+				<p class="pone"></p>	
+				<p class="ptwo"><span class="jump">马上去</span></p>			
+			</div>
+		</div>
+		<div class="shade">
+	   		<p></p>
+		</div>
+		<div class="shade1">
+	   		<p></p>
+		</div>
+		<div id="mask" class="mask"></div> 
+		<div id="sample" style="display: none;">
+			<div class="sample">
+				<img class="closeBtn" src="../image/popup2.png" alt=""/>
+				<div class="example"><img src="../image/111.png"/></div>
+			</div>
+		</div>
+		<div id="loading" style="display:none" ><img alt="" src="../image/loading.gif"></div>
+	 </form>	
+	 	
+</body>
+</html>
+
+ <script src="../js/jquery-1.8.3.min.js"></script>
+ <script src="../js/flexible.js"></script> 
+ <script src="../js/api.js"></script>   
+ <script src="../js/checkLogin.js"></script> 
+ <script src="../js/ajaxfileupload.js"></script>  
+ <script src="../js/uploadImg.js"></script>  
+ <script>
+(function () {
+	var timer1 = null;	
+	$(".workName > input").blur(function() {
+		var workName = $(".workName > input").val();
+		if(!/^[a-zA-Z0-9\u4e00-\u9fa5]+$/.test(workName)) {
+			clearTimeout(timer1);
+			$(".shade1").show();
+			$(".shade1").css('top','13.77777rem');
+			$(".shade1 > p").html("作品名称格式有误");
+			timer1 = setTimeout(function() {
+				$(".shade1").hide();
+				$(".shade1 > p").html("");
+				clearTimeout(timer1);
+			}, 1000);
+		}
+	});
+	
+	$('.mainBtn').on('click',function(){
+		if($('#preview').attr('src') == "" || $('#preview').attr('src') == undefined){
+			clearTimeout(timer1);
+			$(".shade1").show();
+			$(".shade1").css('top','9.77777rem');
+			$(".shade1 > p").html("请上传图片！");
+			timer1 = setTimeout(function() {
+				$(".shade1").hide();
+				$(".shade1 > p").html("");
+				clearTimeout(timer1);
+			}, 1000);
+		}else if($('#preview').attr('filepathId') == "" || $('#preview').attr('filepathId') == undefined){
+			clearTimeout(timer1);
+			$(".shade1").show();
+			$(".shade1").css('top','9.77777rem');
+			$(".shade1 > p").html("请刷新页面重新上传！");
+			timer1 = setTimeout(function() {
+				$(".shade1").hide();
+				$(".shade1 > p").html("");
+				clearTimeout(timer1);
+			}, 1000);
+		}else if(!/^[a-zA-Z0-9\u4e00-\u9fa5]+$/gi.test($(".workName > input").val()) || $(".workName > input").val() == ""){
+			clearTimeout(timer1);
+			$(".shade1").show();
+			$(".shade1").css('top','9.77777rem');
+			$(".shade1 > p").html("作品名称格式有误！");
+			timer1 = setTimeout(function() {
+				$(".shade1").hide();
+				$(".shade1 > p").html("");
+				clearTimeout(timer1);
+			}, 1000);
+		}else if($("#designsIdea").val() == ""){
+			clearTimeout(timer1);
+			$(".shade1").show();
+			$(".shade1").css('top','10.472222rem');
+			$(".shade1 > p").html("大赛宣言不能为空！");
+			timer1 = setTimeout(function() {
+				$(".shade1").hide();
+				$(".shade1 > p").html("");
+				clearTimeout(timer1);
+			}, 1000);
+		}else{
+			xjcong.api.insertDesigns({worksName:$('#worksName').val(),designsIdea:$('#designsIdea').val(),fileId:$('#preview').attr('filepathId'),seasonCount:1},{},function(opt){
+				if(opt.success){
+					window.location.href="uploadWorks_wait.html"; 
+				}else{
+					clearTimeout(timer1);
+					$(".shade1").show();
+					$(".shade1").css('top','10.472222rem');
+					$(".shade1 > p").html(opt.errMsg);
+					timer1 = setTimeout(function() {
+						$(".shade1").hide();
+						$(".shade1 > p").html("");
+						clearTimeout(timer1);
+					}, 1000);
+				}
+			})	
+		}
+		
+	});
+	//设计理念字数限制		
+	$(".designConcept > textarea").on("input",function() {
+		designConcept = $(".designConcept > textarea").val();
+		$(".account").html(designConcept.length);
+		if (designConcept.length >= 100) {
+			designConcept = designConcept.substr(0,99);
+			 $(".designConcept > textarea").val(designConcept);
+		}
+	});
+})()	
+</script>

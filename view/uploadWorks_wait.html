@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=no">
+    <title>审核等待</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/realname_style.css"/>
+    <link rel="stylesheet" href="../css/upload1.css">   
+    
+    <script src="../js/flexible.js"></script>
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/checkLogin.js"></script> 
+</head>
+<body>
+	 	<div class="content">
+	 		<div class="examineState">
+	 			<p>
+	 				<span>恭喜您，上传成功</span>
+	 				<span>作品正在审核中，请耐心等待...</span>
+	 			</p>
+	 		</div>
+	 		
+	 		<div class="backhome">
+	 			<p class="mainBtn">返回首页</p>
+	 		</div>
+	 	</div>
+	
+</body>
+</html>
+<script>
+(function () {
+	
+	$('.mainBtn').on('click',function(){
+		window.location.href="../index.html#2"; 
+	})
+	//
+	var websocket;
+	if ('WebSocket' in window) {
+		websocket = new WebSocket('ws://localhost:8080/rest');
+	} else if ('MozWebSocket' in window) {
+		websocket = new MozWebSocket("ws://localhost:8080/ws");
+	} else {
+		websocket = new SockJS("http://ws:localhost:8080/ws/sockjs");
+	}
+	websocket.onopen = function(event) {
+		console.log("WebSocket:已连接");
+		console.log(event);
+	};
+	websocket.onerror = function(event) {
+		console.log("WebSocket:发生错误 ");
+		console.log(event);
+	};
+	websocket.onclose = function(event) {
+		console.log("WebSocket:已关闭");
+		console.log(event);
+	}
+	websocket.onmessage = function(event) {
+		var data=JSON.parse(event.data);
+		if(data.text === '1'){//驳回			
+			window.location.href = '../index.html#3';
+		}else if(data.text === '0'){//通过
+			window.location.href = '../index.html#2';
+		}else{
+			console.log("WebSocket:收到一条消息",data);
+		}
+	};
+	
+})()	
+</script>

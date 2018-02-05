@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=no">
+	    <title>登录</title>
+	    <link rel="stylesheet" type="text/css" href="../css/register.css"/>
+	</head>
+	<body>
+		<form action="" class="phone">
+			<div class="content">
+				<ul>
+					<li>
+						<input type="text" name="" id="phone" value="" placeholder="请输入手机号"/>
+					</li>
+					<li id="password">
+						<input type="password" name="" id="passwords" value="" placeholder="请输入密码"/>
+						<p class="eyesBtn"><img id="eyes" src="../image/close_eyes.png"/></p>
+					</li>
+				</ul>
+				<div class="registerBtn">
+					<p class="mainBtn" style="display: none;">登录</p>
+		    		<p class="mainBtnInvalid" >登录</p>
+				</div>
+				<div class="forget clearfix">
+					<p class="forgetBtn">忘记密码?</p>
+					<p class="register">注册</p>
+				</div>
+			</div>
+			
+			<div class="incorrect" style="display: none;">
+				<p>账号或密码不正确，请重新输入</p>			
+			</div>
+			
+			<div class="forgotPassword" style="display: none;">
+				<p>账号或密码不正确</p>
+				<div class="choice">
+					<span class="r_current" >返回</span>
+					<span class="choiceBtn">找回密码</span>
+				</div>
+			</div>
+		
+			<div class="loginSuccess" style="display: none;">
+				<div class="m_register">登录成功<br>您可以去填写个人资料了</div>
+				<div class="choice">
+					<span >返回首页</span>
+					<span class="renameBtn">填写资料</span>
+				</div>
+			</div>
+			
+			<div id="mask" class="mask"></div>
+			<!-- 简单弹框提示 -->
+			<div class="shade">
+        		<p></p>
+   			</div>
+		</form>
+	</body>
+</html>
+<script src="../js/flexible.js"></script>
+<script src="../js/jquery-3.2.1.min.js"></script>
+<script src="../js/api.js"></script>  
+<script type="text/javascript">
+(function () {
+	
+	var timer1 = null;
+	//显示遮罩层  
+	 function showMask(){     
+        $("#mask").css("height",$(document).height());     
+        $("#mask").css("width",$(document).width());     
+        $("#mask").show();     
+    } 
+	//隐藏遮罩层  
+	 function hideMask(){     	          
+	     $("#mask").hide();     
+	 } 
+	//手机号得验证
+	$("#phone").blur(function() {
+		clearTimeout(timer1);
+		var phone = $("#phone").val();
+		if (!/^1(3|4|5|7|8)\d{9}$/.test(phone)) {
+			$(".shade").css("display","block");
+			$(".shade > p").html("手机号格式有误");
+			timer1 = setTimeout(function() {
+				$(".shade").css("display","none");
+				clearTimeout(timer1);
+			}, 1000);
+		} 
+	});
+	//密码的显示与隐藏	   
+	$('.eyesBtn').on('click',function(){
+		if ($(this).children().attr('src') == '../image/close_eyes.png') {
+			$(this).siblings().attr('type','text');
+			$(this).children().attr('src','../image/open_eyes.png');
+		} else{
+			$(this).children().attr('src','../image/close_eyes.png');
+			$(this).siblings().attr('type','password');
+		}
+	})
+	//注册按钮点击跳转页
+	$('.forget > p').on('click',function(){
+		window.location.href="retrieval3.html"; 
+	})
+		
+	//登录按钮
+	var num = 0; 
+	$(".mainBtn").on('click',function(){
+		clearTimeout(timer1);
+		xjcong.api.login({name:$('#phone').val(),pwd:$('#passwords').val(),type:'weixin'},{},function(opt){
+			console.log(opt);
+			//登录失败时
+			if(!opt.result){
+				num ++;
+				if (num == 3) {
+					showMask();	
+					$('.forgotPassword').show();
+					$(".r_current").on("click",function() {
+						num = 0;
+						$('.forgotPassword').hide();
+						$("#mask").css("display","none");
+					});
+					$(".choiceBtn").on("click",function() {
+						window.location.href = "./retrieval2.html";
+					});
+				} else {
+					//提示用户账户密码输入有误
+					$(".shade").css("display","block");
+					$(".shade > p").html(opt.errMsg);
+					timer1 = setTimeout(function() {
+						$(".shade").css("display","none");
+						clearTimeout(timer1);
+					}, 1000);
+				}
+			//登录成功时，直接跳转到首页
+			} else {
+				xjcong.api.queryByIndex({seasonCount:1},{},function(opt){
+					if(opt.flag == 1 && opt.currentStage ==1){
+						window.location.href="upload1.html"; 
+					}else{
+						$(".shade").css("display","block");
+						$(".shade > p").html("登录成功！");
+						timer1 = setTimeout(function() {
+							$(".shade").css("display","none");
+							clearTimeout(timer1);
+							window.location.href = "../index.html";
+						}, 1000);
+					}
+				})	
+			}			
+		});	
+	});
+	//登录成功跳转
+    $('.renameBtn').siblings().on('click',function(){
+    	window.location.href="../index.html#0";
+    })
+    $('.renameBtn').on('click',function(){
+	    window.location.href="personalData.html";
+    })
+     //忘记密码跳转
+    $('.forgetBtn').on('click',function(){
+    	  window.location.href="retrieval2.html";
+    })
+	//控制注册按钮的颜色变化
+	$("#phone").on("input",function() {
+		registerToggle ();
+	});
+	$("#passwords").on("input",function() {
+		 registerToggle ();
+	});
+	function registerToggle () {
+		 if(
+	    	$('#passwords').val() != "" &&
+	    	/^1(3|4|5|7|8)\d{9}$/.test($("#phone").val())
+		 ){
+	    		$('.mainBtnInvalid').hide();
+	    		$('.mainBtn').show();
+		} else {
+			    $('.mainBtnInvalid').show();
+			    $('.mainBtn').hide();
+		}
+	}
+		
+		
+		
+		
+		
+		
+})()
+	
+	
+	
+	
+</script>
+

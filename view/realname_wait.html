@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=no">
+    <title>实名认证</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/realname_style.css"/>
+    <link rel="stylesheet" href="../css/upload1.css">   
+    
+    <script src="../js/flexible.js"></script>
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/checkLogin.js"></script> 
+</head>
+<body>
+
+	 	<div class="content">
+	 		<div class="examineState">
+	 			<p><span class="wait">个人信息审核中，请耐心等待...</span></p>
+	 		</div>
+	 		
+	 		<div class="backhome">
+	 			<p class="mainBtn">返回首页</p>
+	 		</div>
+	 	</div>
+	
+</body>
+</html>
+<script>
+(function () {
+	
+	$('.mainBtn').on('click',function(){
+		window.location.href="../index.html#1"; 	
+	})
+	
+	var websocket;
+	if(window.location.protocol === 'http:'){
+		if ('WebSocket' in window) {
+			websocket = new WebSocket('ws://'+window.location.host+'/rest');
+		} else if ('MozWebSocket' in window) {
+			websocket = new MozWebSocket('ws://'+window.location.host+'/rest');
+		} else {
+			websocket = new SockJS('http://'+window.location.host+'/rest/sockjs');
+		}
+	}else{
+		if ('WebSocket' in window) {
+			websocket = new WebSocket('wss://'+window.location.host+'/rest');
+		} else if ('MozWebSocket' in window) {
+			websocket = new MozWebSocket('wss://'+window.location.host+'/rest');
+		} else {
+			websocket = new SockJS('https://'+window.location.host+'/rest/sockjs');
+		}
+	}
+	
+	websocket.onopen = function(event) {
+		console.log("WebSocket:已连接");
+		console.log(event);
+	};
+	websocket.onerror = function(event) {
+		console.log("WebSocket:发生错误 ");
+		console.log(event);
+	};
+	websocket.onclose = function(event) {
+		console.log("WebSocket:已关闭");
+		console.log(event);
+	}
+	websocket.onmessage = function(event) {
+		var data=JSON.parse(event.data);
+		if(data.text === '2'){//驳回			
+			window.location.href = 'realname_fail.html';
+		}else if(data.text === '1'){//通过
+			window.location.href = '../index.html#2';
+		}else{
+			console.log("WebSocket:收到一条消息",data);
+		}
+	};
+	
+	function getContextPath(){   
+	    var pathName = document.location.pathname;   
+	    var index = pathName.substr(1).indexOf("/");   
+	    var result = pathName.substr(0,index+1);   
+	    alert(result);
+	    return result;   
+	}  
+	
+})()	
+</script>

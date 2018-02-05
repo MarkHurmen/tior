@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=no">
+    <title>优化作品</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+    <link rel="stylesheet" href="../css/upload2.css">   
+    <link rel="stylesheet" type="text/css" href="../css/upload_works.css"/>
+    
+</head>
+<body>
+	 	<div class="content">
+	 		<div class="ruleDescription">
+	 			<p>规则说明</p>
+	 			<ul class="ruleDescriptionText">
+					<li>在原有作品基础上，适当进行细节优化，不改变原有设计主体</li>
+					<li>请务必在截止日期前进行上传，否则默认以初稿作为最终评比定稿</li>
+					<li>审核未通过的作品，若截止日期内没有进行重新上传，将默认以初稿作为最终评比定稿</li>
+				</ul>
+	 		</div>
+	 		<div class="uploadWorks">
+	 			<p>上传作品</p>
+	 			<div class="uploadWorksBtn">
+	 				<ul class="shan"></ul>
+	 				<p class="sham"></p>
+	 				<input class="ajaxImg" id="file" type="file" name="cerfile" />
+	 				<img class="ajaxImg1" src="../image/btn-upload.png"/>
+	 				<img class="ajaxImg2" id="preview" src="" style="display: none;"/>
+	 			</div>
+	 		</div>
+	 		<div class="workName">
+	 			<input type="text" name="" id="worksName" maxlength="20" value="" placeholder="作品名称"/>
+	 		</div>
+	 		<div class="designConcept">
+	 			<textarea name="" rows="" cols="" id="designsIdea" maxlength="100" placeholder="请输入设计理念"></textarea>
+	 			<p><span class="account">0</span>/100</p>
+	 		</div>
+	 		<div class="designConcept detailes">
+	 			<textarea name="" rows="" cols="" id="typeDetails" maxlength="100" placeholder="请输入优化详情"></textarea>
+	 			<p><span class="account">0</span>/100</p>
+	 		</div>
+	 		<div class="nextBtn">
+				<p class="mainBtn">下一步</p>
+	    		<p class="mainBtnInvalid" style="display: none;">下一步</p>
+			</div>
+	 	</div>
+	 	
+	 	<div id="backImg" style="display: none;">
+			<img class="closeImg" src="../image/popup2.png" alt="" />
+			<div id="backgroundImg">			
+				<p class="pone"></p>				
+			</div>
+		</div>
+		<div class="shade">
+	   		<p></p>
+		</div>
+		<div id="mask" class="mask"></div> 
+		<div id="loading" style="display:none" ><img alt="" src="../image/loading.gif"></div>
+</body>
+</html>
+<script src="../js/flexible.js"></script>
+<script src="../js/jquery-1.8.3.min.js"></script>
+<script src="../js/api.js"></script> 
+<script src="../js/checkLogin.js"></script> 
+<script src="../js/ajaxfileupload.js"></script>  
+<script src="../js/uploadImg3.js"></script>  
+<script>
+(function () {
+	 var timer1= null;
+	function getId(){
+	    var url = window.location.href;
+	    return url.split("#")[1];	
+	}
+	$('.mainBtn').on('click',function(){
+		xjcong.api.updateDesigns({worksName:$('#worksName').val(),designsIdea:$('#designsIdea').val(),fileId:$('#preview').attr('filepathId'),typeDetails:$('#typeDetails').val(),id:getId(),},{},function(opt){
+			if(opt.success){
+				window.location.href="uploadWorks_wait.html"; 
+			}else{
+				clearTimeout(timer1);	
+				showMask();
+				$('#backImg').show();
+				$('.closeImg').hide();
+				$('#backImg').css('top','13.472222rem');
+				$('.pone').css('border','none');
+				$('.pone').html(opt.data);
+				timer1 = setTimeout(function() {
+					hideMask();
+					$('#backImg').hide();
+					clearTimeout(timer1);
+				}, 1000);	
+			}
+		})	
+		
+		
+	});
+	//设计理念字数限制		
+	$(".designConcept > textarea").on("input",function() {
+		designConcept = $(".designConcept > textarea").val();
+		$(".account").html(designConcept.length);
+		if (designConcept.length >= 100) {
+			designConcept = designConcept.substr(0,99);
+			 $(".designConcept > textarea").val(designConcept);
+		}
+	});
+})()
+</script>

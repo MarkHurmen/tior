@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=no">
+    <title>作品列表</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+    <link rel="stylesheet" href="../css/upload2.css">   
+    <link rel="stylesheet" type="text/css" href="../css/audition_works50.css"/>
+    
+</head>
+<body >		
+	 	<div class="content">
+	 		<div class="poster">
+	 			<img src="../image/poster_banner.png"/>
+	 		</div>
+	 		<div class="search">
+	 			<input type="text" name="" id="" value="" placeholder="请输入姓名或编号" maxlength="15">
+	 			<p>搜索</p>
+	 		</div>
+	 		<div class="details">
+	 			<p class="details_p">
+	 				<span id="">入围50强作品</span>
+	 				<a class="mywork">我的作品></a>
+	 			</p>
+	 			<ul class="details_ul">
+	 				
+	 			</ul>
+	 		</div>
+	 	</div>
+	 	<div id="backImg" style="display: none;">
+			<img class="closeImg" src="../image/popup2.png" alt="" />
+			<div id="backgroundImg">			
+				<p class="pone">你需要先进行<span>实名认证</span>噢！</p>
+				<p class="ptwo"><span class="jump">马上去</span></p>
+			</div>
+		</div>
+		<div class="shade">
+	   		<p></p>
+		</div>
+		<div id="mask" class="mask"></div> 
+</body>
+</html>
+<script src="../js/flexible.js"></script>
+<script src="../js/jquery-3.2.1.min.js"></script>
+<script src="../js/jweixin-1.2.0.js"></script>
+<script src="../js/api.js"></script> 
+<script src="../js/checkLogin.js"></script> 
+ <script> 
+ (function () {
+	var pageNo = 1;
+	function search(){
+ 		xjcong.api.queryAppTicketList({seasonCount:1,joinStatus:2,pageNo:pageNo,pageSize:6},{},function(opt){
+ 			if(opt.success){
+ 				if(opt.flag != 1){
+ 					$('.mywork').hide();
+ 				}
+ 				var data = opt.rows;
+ 				$('.mywork').attr('id',opt.otherMsg);
+ 				if(data.length>0){
+ 					var path
+ 					for (var i = 0; i < data.length; i++) {
+ 						var path1 = data[i].designsfilelist[0].filePath.path;
+ 						if(path1 != null){
+ 							var path2 = path1.split(".")[0];
+ 	 						var path3 = path1.split(".")[1];
+ 	 						path = path2+'_compress.'+path3;
+ 						}else{
+ 							path = "";
+ 						}
+ 						
+ 						
+						var html = '<li id="'+data[i].id+'" userId="'+data[i].userId+'">'+
+										'<div class="serialNo"><i>'+data[i].id+'</i>号</div>'+
+				 						'<p><img src="'+path+'"/></p>'+
+				 						'<div class="information">'+
+				 							'<p class="namedata"><span>'+data[i].worksName+'</span><i class="votesNo">'+data[i].ticketsId+'票</i></p>'+
+				 						'</div>'+
+				 				         '<div class="voteBtn">投  票</div>'+
+				 					'</li>'
+ 	   				 $('.details_ul').append(html);
+					}
+ 				}
+ 				$('.details_ul').children('li').on('click',function(){
+ 					var Id= $(this).attr('id');
+					window.location.href="worksDetails.html#"+Id;  
+ 			 	});
+ 			}else{
+ 				alert(opt.errMsg);
+ 			}
+ 		})	
+ 	}
+ 	search();
+ 	
+ 	//点击搜索
+ 	$('.search > p').on('click',function(){
+ 		window.location.href = "search_works.html#"+$('.search > input').val()+'#2';
+ 		$('.search > input').val("");
+ 		return;
+ 	})
+ 	
+ 	$('.mywork').on('click',function(){
+ 		$.ajax({
+ 			url:'/rest/loginStatus',
+ 			dataType:'JSON',
+ 			async:false,
+ 			type:'get',
+ 			timeout:10000,
+ 			success:function(obj){
+ 				if(!obj.result){
+ 					showMask();
+ 					$('#backImg').show();
+ 					$('.pone').children('span').remove();
+ 					$('.pone').html('您还未登录哟！');
+ 					$(".ptwo").on('click',function(){
+ 						window.location.href="/front/eventCompetition/view/register.html";  
+ 				    });	
+ 				}else{				
+ 					window.location.href="myWorks.html#"+$('.mywork').attr('id');  
+
+ 				}
+ 			}
+ 		}) 
+ 	});
+ 	
+ 	//窗体滚动时进行加载
+	 $(document).scroll(function() {
+		 if(($(document).height()-document.documentElement.clientHeight) == $(document).scrollTop()){		         
+      		 pageNo++;
+      		 search(pageNo);
+	     }
+	 });
+ 	
+ 	//分享页面代码
+	var appId = '';
+	var timestamp = '';
+	var nonceStr = '';
+	var signature = '';
+	var shareUrl = window.location.href;
+	var result = shareUrl.split("/view")[0];	
+	var imgUrl = result +'/image/share.png';
+	 $.post("/rest/matchs/matchShare?url="+shareUrl,function(data){
+		 appId = data.data.appId;
+		 timestamp = data.data.timestamp;
+		 nonceStr = data.data.nonceStr;
+		 signature = data.data.signature;
+		 
+		wx.config({
+		    appId: appId, 
+		    timestamp:timestamp, 
+		    nonceStr: nonceStr, 
+		    signature: signature,
+		    jsApiList: ['checkJsApi','onMenuShareAppMessage','onMenuShareTimeline','onMenuShareQQ','onMenuShareQZone'] 
+		});
+		
+		wx.ready(function(){
+			//分享给朋友		
+			wx.onMenuShareAppMessage({
+	    	    title: '小金葱送我10000元，能不能拿，就看你了', // 分享标题
+	    	    desc: '颜值与实力的对决~', // 分享描述
+	    	    link: window.location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+	    	    imgUrl: imgUrl, // 分享图标
+	    	    type: '', // 分享类型,music、video或link，不填默认为link
+	    	    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+	    	    success: function () { 
+	    	        // 用户确认分享后执行的回调函数	    	        
+	    	    },
+	    	    cancel: function () { 
+	    	        // 用户取消分享后执行的回调函数	    	        
+	    	    }
+	    	});
+			//分享给朋友圈
+			wx.onMenuShareTimeline({
+				title: '小金葱送我10000元，能不能拿，就看你了', // 分享标题
+				desc: '颜值与实力的对决~', // 分享描述
+			    link: window.location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+			    imgUrl: imgUrl, // 分享图标
+			    success: function () { 
+			        // 用户确认分享后执行的回调函数
+			    },
+			    cancel: function () { 
+			        // 用户取消分享后执行的回调函数
+			    }
+			});
+			//分享到QQ
+			wx.onMenuShareQQ({
+				title: '小金葱送我10000元，能不能拿，就看你了', // 分享标题
+				desc: '颜值与实力的对决~', // 分享描述
+			    link:  window.location.href, // 分享链接
+			    imgUrl: imgUrl, // 分享图标
+			    success: function () { 
+			       // 用户确认分享后执行的回调函数
+			    },
+			    cancel: function () { 
+			       // 用户取消分享后执行的回调函数
+			    }
+			});
+			//分享到QQ空间
+			wx.onMenuShareQZone({
+				title: '小金葱送我10000元，能不能拿，就看你了', // 分享标题
+				desc: '颜值与实力的对决~', // 分享描述
+			    link: window.location.href, // 分享链接
+			    imgUrl: imgUrl, // 分享图标
+			    success: function () { 
+			       // 用户确认分享后执行的回调函数
+			    },
+			    cancel: function () { 
+			        // 用户取消分享后执行的回调函数
+			    }
+			});
+		})		
+	}); 
+ })()	
+</script> 
+

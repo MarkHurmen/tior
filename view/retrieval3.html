@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=no">
+	    <title>注册</title>
+	    <link rel="stylesheet" type="text/css" href="../css/register.css"/>
+	</head>
+	<body>
+		<form action="" id="sign">
+			<div id="verification" style="display: none;">
+				<p>验证码已发送至 <span></span></p>
+			</div>
+			<!-- <div class="register">
+				<p>登录</p>
+			</div> -->
+			<div class="content">
+				<ul class="uploadText">
+					<li>
+						<input type="text" name="" id="phone" value="" placeholder="请输入手机号"/>
+					</li>
+					<li class="verify">
+						<input type="text" name="" id="captcha" value="" placeholder="请输入图形验证码"/>
+						<img id="potoImg" onclick="getImg()"> 
+					</li>
+					<li class="verify">
+						<input type="text" name="" id="code" value="" placeholder="请输入验证码"/>
+						<input id="obtainBtn" type="button" value="获取验证码"> 
+					</li>
+					<li id="password">
+						<input type="password" name="" id="passwords" value="" placeholder="设置密码（6-18位字母数字组合）"/>
+						<p class="eyesBtn"><img id="eyes" src="../image/close_eyes.png"/></p>
+					</li>
+				</ul>
+				<div class="registerBtn">
+					<p class="mainBtn" style="display: none;">注册</p>
+		    		<p class="mainBtnInvalid">注册</p>
+				</div>	
+				<div class="forget clearfix">
+					<img src="../image/agree2.png" />				 
+					<p class="agree"><span class="agrees">同意</span><span class="agree_deal">《小金葱用户注册协议》</span></p>
+				</div>
+			</div>
+			<div id="mask" class="mask"></div> 
+			<div class="loginSuccess" style="display: none;">
+				<p>登录成功</p>
+				<!-- <br/>您可以去进行实名认证了 -->
+				<div class="choice">
+					<span >返回首页</span>
+					<!-- <span class="choiceBtn">实名认证</span> -->
+				</div>
+			</div>
+			 <div class="shade">
+        		<p></p>
+   			</div>
+		</form>
+	</body>
+</html>
+<script src="../js/flexible.js"></script>
+<script src="../js/jquery-3.2.1.min.js"></script>
+<script src="../js/api.js"></script>  
+<script type="text/javascript">
+function getImg(){
+	$('#potoImg').attr('src','/rest/captcha?time=New Date()');
+}
+(function () {	
+	//获取图形验证码
+	getImg();
+	
+	//点击查看协议
+	$(".agree_deal").on("click",function() {
+		window.location.href = "agreement.html";
+	});
+	//手机号的验证
+	var timer1 = null;
+	$("#phone").blur(function() {
+		clearTimeout(timer1);
+		var phone = $("#phone").val();
+		if (!/^1(3|4|5|7|8)\d{9}$/.test(phone)) {
+			$(".shade").css("display","block");
+			$(".shade > p").html("手机号格式有误");
+			timer1 = setTimeout(function() {
+				$(".shade").css("display","none");
+				clearTimeout(timer1);
+			}, 1000);
+		}
+	});
+	//密码长度的验证
+	$("#passwords").blur(function() {
+		clearTimeout(timer1);
+		var passwords = $("#passwords").val();
+		if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,18}$/.test(passwords)) {
+			$(".shade").css("display","block");
+			$(".shade > p").html("密码不符合要求");
+			timer1 = setTimeout(function() {
+				$(".shade").css("display","none");
+				clearTimeout(timer1);
+			}, 1000);
+		}
+	});
+	//控制注册按钮的颜色变化
+	$("#phone").on("input",function() {
+		registerToggle ();
+	});
+	$("#code").on("input",function() {
+		registerToggle ();
+	});
+	$("#passwords").on("input",function() {
+		 registerToggle ();
+	});
+	//显示遮罩层  
+	function showMask(){     
+        $("#mask").css("height",$(document).height());     
+        $("#mask").css("width",$(document).width());     
+        $("#mask").show();     
+    }  
+   //隐藏遮罩层  
+   function hideMask(){     	          
+       $("#mask").hide();     
+   } 
+   //密码眼睛显示
+	$('.eyesBtn').on('click',function(){
+		if ($(this).children().attr('src') == '../image/close_eyes.png') {
+			$(this).siblings().attr('type','text');
+			$(this).children().attr('src','../image/open_eyes.png');
+		} else{
+			$(this).children().attr('src','../image/close_eyes.png');
+			$(this).siblings().attr('type','password');
+		}
+	})
+	/* //同意二字的灰色与绿色
+	if ($(".forget").children('img').attr('src') == '../image/agree2.png') {
+		$(".agrees").css("color","#a3d9cb");
+	} else {
+		$(".agrees").css("color","#E1E1E3");
+	} */
+	//同意协议按钮的亮灭
+	$(".forget").children('img').on('click',function(){
+		if($(this).attr('src') == '../image/agree2.png'){
+			$(this).attr('src','../image/agree1.png');
+			$(".agrees").css("color","#E1E1E3");
+			$(".agree_deal").css("color","#E1E1E3");
+			$('.mainBtnInvalid').show();
+    		$('.mainBtn').hide();
+		}else{
+			$(this).attr('src','../image/agree2.png');
+			$(".agrees").css("color","#a3d9cb");
+			$(".agree_deal").css("color","#fc3734");
+			registerToggle ();
+		}	
+	});
+	
+	
+  //注册按钮
+    var timer1 = null;
+  	var timer2 = null;
+	$(".mainBtn").on('click',function(){
+		clearTimeout(timer1);
+		xjcong.api.addUser({phoneNo:$('#phone').val(),password:$('#passwords').val(),code:$('#code').val(),InvitationCode:"",channel:2},{},function(opt){
+			if(opt.success){					
+				xjcong.api.queryByIndex({seasonCount:1},{},function(opt){
+					if(opt.flag == 1 && opt.currentStage ==1){
+						window.location.href="upload1.html"; 
+					}else{
+						$(".shade").css("display","block");
+						$(".shade > p").html("登录成功！");
+						timer1 = setTimeout(function() {
+							$(".shade").css("display","none");
+							clearTimeout(timer1);
+							window.location.href = "../index.html";
+						}, 1000);
+					}
+				})	
+				
+			} else {
+				$(".shade").css("display","block");
+				$(".shade > p").html(opt.errMsg);
+				timer1 = setTimeout(function() {
+					$(".shade").css("display","none");
+				}, 1000);
+			}
+		})	
+	})
+	
+
+	var num = 60;
+	var ob_btn = document.getElementById("obtainBtn");
+	//获取验证码	
+	$("#obtainBtn").on('click',function(){
+// 		getImg();
+		//当手机号格式有误或为空，无法获取验证
+		if (!/^1[3|4|5|7|8][0-9]\d{4,8}$/.test($("#phone").val()) || $("#phone").val().trim().length == 0 ) {
+			$(".shade").css("display","block");
+			$(".shade > p").html("手机号格式有误");
+			timer1 = setTimeout(function() {
+				$(".shade").css("display","none");
+			}, 1000);
+			return;
+		}   	
+		clearInterval(timer2);
+		ob_btn.disabled= true;
+		$(this).css("background-color","buttonface");
+		timer2 = setInterval(function() {			
+			num --;
+			$("#obtainBtn").val(num+"s");			
+			if (num == 0) {
+				ob_btn.disabled = false ;
+				$("#obtainBtn").css("background-color","#fff");
+				$("#obtainBtn").val("重新获取");
+				clearInterval(timer2);
+				num = 60;
+			}
+		},1000);
+		if($('#phone').val() != "" && (/^1(3|4|5|7|8)\d{9}$/.test($('#phone').val()))){
+			xjcong.api.sendValidateCodeByCaptcha({phoneNo:$('#phone').val(),captcha:$('#captcha').val()},{},function(opt){
+				if(opt.success){
+					clearTimeout(timer1);
+					//顶部显示验证码已发送至。。。。
+					$('#verification').show();
+					$('#verification').children().children('span').text($('#phone').val());
+					//当手机号正确显示验证码已发送，
+					$('#verification').show();
+					$('#verification').children().children('span').text($('#phone').val());
+					timer1 = setTimeout(function() {
+						$('#verification').hide();
+						clearTimeout(timer1);
+					}, 5000);
+					
+				} else {
+					getImg();
+					$(".shade").css("display","block");
+					$(".shade > p").html(opt.errMsg);
+					timer1 = setTimeout(function() {
+						$(".shade").css("display","none");
+					}, 1000);
+				}
+			})	
+		}else{
+			$(".shade").css("display","block");
+			$(".shade > p").html("手机号格式有误");
+			setTimeOut ();
+		}
+	})
+	//控制登录按钮的点击与否
+	function registerToggle () {
+		 if($('#code').val() != "" &&
+			/^1(3|4|5|7|8)\d{9}$/.test($("#phone").val())&&
+			/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,18}$/.test($('#passwords').val())&&
+	    	$(".forget").children('img').attr('src') == '../image/agree2.png'){
+	    		$('.mainBtnInvalid').hide();
+	    		$('.mainBtn').show();
+		}else {
+		    $('.mainBtnInvalid').show();
+		    $('.mainBtn').hide();
+		}
+	}
+	
+})()
+</script>
+

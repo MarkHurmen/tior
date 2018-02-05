@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=no">
+    <title>战队资料</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+    <link rel="stylesheet" href="../css/upload2.css">   
+    <link rel="stylesheet" type="text/css" href="../css/corpsData.css"/>   
+</head>
+<body >
+	<form class="corpsData">
+	 	<div class="content">
+	 		<div class="workName">
+	 			<input type="text" name="" id="name" value="" placeholder="请输入战队名字"/>
+	 		</div>
+	 		<div class="member">
+		 		<div class="contactWay" id="contactWay">
+		 			<input type="text" name="" class="inputcorps" onblur="inputcorps(this);" id="tel" value="" placeholder="请输入队长注册手机号"/>
+		 			<p class="add">添加</p>
+		 		</div>
+		 		
+		 		
+	 		</div>
+	 		<div class="designConcept">
+	 			<textarea name="" rows="" cols="" id="declaration" maxlength="50" placeholder="请输入战队宣言"></textarea>
+	 			<p>0/50</p>
+	 		</div>	 		
+	 		<div class="uploadWorks">
+	 			<p>战队风采</p>
+	 			<div class="uploadWorksBtn">
+	 				<p class="lookBtn">提示：“上传战队照片”</p>
+	 				<p class="sham" style="display: none;"></p>
+	 				<input class="ajaxImg" id="file" type="file" name="participantfile" />
+	 				<img class="ajaxImg1" src="../image/btn-upload.png"/>
+	 				<img class="ajaxImg2" id="preview" src="" style="display: none;"/>
+	 			</div>
+	 		</div>
+	 		<div class="reminder">
+	 			<div class="explain">
+	 				<p>温馨提示</p>
+		 			<span>本照片将用于战队作品主页展示，请务必上传战队真实照片，要美美哒喔~</span> 		
+	 			</div>	 			
+	 		</div>
+	 		
+	 		<div class="nextBtn">
+				<p class="mainBtn">下一步</p>
+	    		<p class="mainBtnInvalid" style="display: none;">下一步</p>
+			</div>
+	 	</div>	
+	 	<div id="backImg" style="display: none;">
+			<img class="closeImg" src="../image/popup2.png" alt="" />
+			<div id="backgroundImg">			
+				<p class="pone">你需要先进行<span>实名认证</span>噢！</p>
+				<p class="ptwo"><span class="jump">马上去</span></p>
+			</div>
+		</div>
+		<div class="shade">
+	   		<p></p>
+		</div>
+		<div id="mask" class="mask"></div> 
+		<div id="loading" style="display:none" ><img alt="" src="../image/loading.gif"></div>
+	 </form>	
+</body>
+</html>
+<script src="../js/flexible.js"></script>
+<script src="../js/jquery-1.8.3.min.js"></script>
+<script src="../js/api.js"></script> 
+<script src="../js/checkLogin.js"></script> 
+<script src="../js/ajaxfileupload.js"></script> 
+<script src="../js/uploadImg2.js"></script>
+<script>
+function inputcorps(ele){
+		if($(ele).val()==''){
+			return;
+		};
+		xjcong.api.queryVerification({acount:$(ele).val()},{},function(opt){
+			if(opt.success){
+				
+			}else{
+				showMask();
+				 $('#backImg').show();
+				$('.pone').children('span').remove();
+				$('.pone').html(opt.errMsg);	 
+			}
+		});
+		return;
+}
+
+(function () {
+	$('.add').on('click',function(){
+		var no = $('.member .inputcorps').size();
+		if($('.member .inputcorps').size() < 5){
+			var html = '<div class="contactWay"><input type="text" onblur="inputcorps(this);" class="inputcorps" name=""  value="" placeholder="请输入成员注册手机号"/><p class="delete">删除</p></div>';							
+			$('.member').append(html);		
+			clear();
+			return;
+		}else{
+			showMask();
+			$('#backImg').show();
+			$('.pone').children('span').remove();
+			$('.pone').html('最多添加4个队员！');
+		}
+		
+	})
+	
+	function clear(){
+		$('.delete').on('click',function(){
+			$(this).parent().remove();
+		})
+	}
+	
+	$('.mainBtn').on('click',function(){
+		xjcong.api.insertCorps({corpsName:$('#name').val(),acount:$('#tel').val(),corpsDeclaration:$('#declaration').val(),fileId:$('#preview').attr('filepathId'),seasonCount:1},{},function(opt){
+			if(opt.success){
+				showMask();
+				$('#backImg').show();
+				$('.pone').children('span').remove();
+				$('.pone').html('战队资料上传完成！');
+				$('.ptwo').html('下一步');
+				$(".ptwo").on('click',function(){
+					window.location.href="upload_works.html";  
+			    });	
+			}else{
+				showMask();
+				$('#backImg').show();
+				$('#backImg').css('top','9.472222rem');
+				$('.pone').children('span').remove();
+				$('.pone').html(opt.errMsg);
+				
+			}
+		})	
+	});
+	
+
+})()
+</script>
+

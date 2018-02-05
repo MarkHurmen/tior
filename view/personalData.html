@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=no">
+    <title>个人资料</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+    <link rel="stylesheet" href="../css/upload2.css">   
+    <link rel="stylesheet" type="text/css" href="../css/personalData.css"/>   
+</head>
+<body >
+		
+	 	<div class="content">
+	 		<div class="workName">
+	 			<input type="text" name="" id="name" value="" maxlength="10" placeholder="请输入真实姓名"/>
+	 		</div>
+	 		<div class="contactWay">
+	 			<input type="text" name="" id="tel" value="" placeholder="请输入联系方式"/>
+	 		</div>
+	 		<div class="designConcept">
+	 			<textarea name="" rows="" cols="" id="declaration" maxlength="100" placeholder="请输入大赛宣言"></textarea>
+	 			<p><span class="account">0</span>/50</p>
+	 		</div>	 		
+	 		<div class="uploadWorks">
+	 			<p class="uploadWorks_p">个人风采</p>
+	 			<div class="uploadWorksBtn">
+	 				<p class="lookBtn">提示：“上传个人照片”</p>
+	 				<p class="sham" style="display: none;"></p>
+	 				<input class="ajaxImg" id="file" type="file" name="participantfile" />
+	 				<img class="ajaxImg1" src="../image/btn-upload.png"/>
+	 				<img class="ajaxImg2" id="preview" src="" style="display: none;"/>
+	 			</div>
+	 		</div>
+	 		<div class="reminder">
+	 			<div class="explain">
+	 				<p>温馨提示</p>
+		 			<span>本照片将用于个人作品主页展示，请务必上传本人真实照片，要美美哒喔~</span> 		
+	 			</div>	 			
+	 		</div>
+	 		
+	 		<div class="nextBtn">
+				<p class="mainBtn">下一步</p>
+	    		<p class="mainBtnInvalid" style="display: none;">下一步</p>
+			</div>
+	 	</div>	
+	 	<div id="backImg" style="display: none;">
+			<img class="closeImg" src="../image/popup2.png" alt="" />
+			<div id="backgroundImg">			
+				<p class="pone">你需要先进行<span>实名认证</span>噢！</p>
+				<p class="ptwo" style="display: none;"><span class="jump">马上去</span></p>
+			</div>
+		</div>
+		<div class="shade1">
+	   		<p></p>
+		</div>
+		<div id="mask" class="mask"></div> 
+		<div id="loading" style="display:none" ><img alt="" src="../image/loading.gif"></div>
+</body>
+</html>
+<script src="../js/flexible.js"></script>
+<script src="../js/jquery-1.8.3.min.js"></script>
+<script src="../js/api.js"></script> 
+<script src="../js/checkLogin.js"></script> 
+<script src="../js/ajaxfileupload.js"></script> 
+<script src="../js/uploadImg2.js"></script>
+<script>
+(function () {
+	 var timer1= null;
+	 var timer =null;
+	//验证手机号	
+	$(".contactWay > input").blur(function() {
+		var contactWay = $(".contactWay > input").val();
+		if (!/^1(3|4|5|7|8)\d{9}$/.test(contactWay)) {
+			clearTimeout(timer);
+			$(".shade1").show();
+			$(".shade1").css('top','3.777777rem');
+			$(".shade1 > p").html("手机号格式有误");
+			timer = setTimeout(function() {
+				$(".shade1").hide();
+				$(".shade1 > p").html("");
+				clearTimeout(timer);
+			}, 1000);
+		}
+	});
+	//姓名输入框只能输入汉字
+	$(".workName > input").blur(function() {
+		var workName = $(".workName > input").val();
+		if(!/^[\u4E00-\u9FA5]+$/.test(workName)) {
+			clearTimeout(timer);
+			$(".shade1").show();
+			$(".shade1").css('top','3.777777rem');
+			$(".shade1 > p").html("姓名格式有误");
+			timer = setTimeout(function() {
+				$(".shade1").hide();
+				$(".shade1 > p").html("");
+				clearTimeout(timer);
+			}, 1000);
+		}
+	});
+	
+	//大赛宣言字数限制		
+	$(".designConcept > textarea").on("input",function() {
+		var designConcept = $(".designConcept > textarea").val();
+		if (designConcept.length <= 50) {
+			$(".account").html(designConcept.length);
+		}		
+		if (designConcept.length > 50) {
+			designConcept = designConcept.substr(0,50);
+			$(".designConcept > textarea").val(designConcept);
+			$(".account").html(50);
+		}
+	});
+	
+	$('.mainBtn').on('click',function(){
+		if(!/^[\u4e00-\u9fa5]+$/gi.test($(".workName > input").val()) || $(".workName > input").val() == ""){
+			clearTimeout(timer1);	
+			showMask();
+			$('#backImg').show();
+			$('.closeImg').hide();
+			$('#backImg').css('top','5.472222rem');
+			$('.pone').css('border','none');
+			$('.pone').html("姓名格式有误！");
+			timer1 = setTimeout(function() {
+				hideMask();
+				$('#backImg').hide();
+				clearTimeout(timer1);
+			}, 1000)	
+		}else if(!/^1(3|4|5|7|8)\d{9}$/.test($(".contactWay > input").val()) || $(".contactWay > input").val() == ""){
+			clearTimeout(timer1);	
+			showMask();
+			$('#backImg').show();
+			$('.closeImg').hide();
+			$('#backImg').css('top','5.472222rem');
+			$('.pone').css('border','none');
+			$('.pone').html("联系方式格式有误！");
+			timer1 = setTimeout(function() {
+				hideMask();
+				$('#backImg').hide();
+				clearTimeout(timer1);
+			}, 1000)	
+		}else if($("#declaration").val() == ""){
+			console.log($("#declaration").val())
+			clearTimeout(timer1);	
+			showMask();
+			$('#backImg').show();
+			$('.closeImg').hide();
+			$('#backImg').css('top','5.472222rem');
+			$('.pone').css('border','none');
+			$('.pone').html("大赛宣言不能为空！");
+			timer1 = setTimeout(function() {
+				hideMask();
+				$('#backImg').hide();
+				clearTimeout(timer1);
+			}, 1000)	
+		}else if($('#preview').attr('src') == "" || $('#preview').attr('src') == undefined){
+			clearTimeout(timer1);	
+			showMask();
+			$('#backImg').show();
+			$('.closeImg').hide();
+			$('#backImg').css('top','5.472222rem');
+			$('.pone').css('border','none');
+			$('.pone').html("请上传图片！");
+			timer1 = setTimeout(function() {
+				hideMask();
+				$('#backImg').hide();
+				clearTimeout(timer1);
+			}, 1000);	
+		}else if($('#preview').attr('filepathId') == "" || $('#preview').attr('filepathId') == undefined){
+			clearTimeout(timer1);	
+			showMask();
+			$('#backImg').show();
+			$('.closeImg').hide();
+			$('#backImg').css('top','5.472222rem');
+			$('.pone').css('border','none');
+			$('.pone').html("请刷新页面重新上传！");
+			timer1 = setTimeout(function() {
+				hideMask();
+				$('#backImg').hide();
+				clearTimeout(timer1);
+			}, 1000);	
+		}else{
+			xjcong.api.addPersonProfile({name:$('#name').val(),tel:$('#tel').val(),declaration:$('#declaration').val(),pFileId:$('#preview').attr('filepathId'),seasonCount:1},{},function(opt){
+				if(opt.success){
+					window.location.href="upload_works.html"; 
+				}else{
+					clearTimeout(timer1);	
+					showMask();
+					$('#backImg').show();
+					$('.closeImg').hide();
+					$('#backImg').css('top','5.472222rem');
+					$('.pone').css('border','none');
+					$('.pone').html(opt.errMsg);
+					timer1 = setTimeout(function() {
+						hideMask();
+						$('#backImg').hide();
+						clearTimeout(timer1);
+					}, 1000);	
+				}
+			})	
+		}
+		
+	});
+	
+
+})()
+</script>
+

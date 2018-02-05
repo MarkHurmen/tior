@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=no">
+	    <title>投票规则</title>
+	    <link rel="stylesheet" type="text/css" href="../css/protocol.css"/>	  
+	</head>
+	<body>	
+			<h1 class="title">珠宝设计大赛投票规则</h1>
+			<div class="content">
+				<div class="text1 text">
+					<h1>各位参赛及投票人员：</h1>
+					<ul  class="explain">
+						<li><p>第一届"珠宝设计大赛"开赛以来，得到各位学员踊跃报名积极参与和支持，但主办方在前期“暑你最美”投票系统后台监测中，发现有个别参赛者恶意刷票的行为，严重干扰了比赛的正常秩序。为了保证比赛的公平公正，主办方会对本次大赛投票原始数据进行严密监控，发现恶意刷票等违规投票等行为，将会采取扣除违规票数甚至取消相关比赛资格的措施。</p></li>
+					</ul>
+				</div>
+				<div class="text">
+					<h1>投票规则：</h1>
+					<ul>
+						<li>
+							<p>投票时间分为两个时间段：</p>
+							<p>①、2017-11-16 (00:00:00)—2017-11-19        （23:59:59）为期4天的海选拉票日；</p>
+							<p>②、2017-12-5(0:00:00—23:59:59)为期1天的初赛拉票日。</p>
+						</li>
+						<li><p>账号在同一台终端（手机&平板）在同一个IP地址24小时内相同作品只可投票1次；</p></li>
+						<li><p>严禁利用第三方投票公司及各种恶意程序进行集中刷票或买卖票，主办方将对活动所有投票数据进行实时监控；</p></li>
+						<li><p>通过刷票工具或者其他手段获得的票数，系统将会从后台自动剔除，情节严重的将取消比赛资格，并对活动中刷票行为的作品和后台数据进行公示。</p></li>
+					</ul>
+				</div>
+				<div class="text">
+					<h1>刷票判定规则：</h1>
+					<ul>
+						<li><p>投票期间连续每分钟内检测较大数量投票，并且50%以上归属地来源省外及异常IP、号段；</p></li>
+						<li><p>后台监测存在非常有规律的投票持续一定时间，并且50%以上归属地来源省外及异常IP、号段；</p></li>
+						<li><p>24小时内出现票数骤增，并且50%以上归属地来源省外及异常IP、号段；</p></li>
+						<li><p>在此，主办方呼吁各参赛人员严格自律，公平竞争，以客观积极的原则进行参赛。同时也为了保证大家自己的利益不受损失，望参赛人员相互监督，比赛中若发现有类似违规行为，请及时与我们联系。</p></li>
+					</ul>
+				</div>
+			</div>
+			<div class="agree">
+				<img class="checkImg" src="../image/noChecked.png" alt="">
+				<span>已阅读</span>
+			</div>
+			<div class="registerBtn">
+				<p class="mainBtn" style="display: none;">下一步</p>
+	    		<p class="mainBtnInvalid">下一步</p>
+			</div>	
+			<div id="mask" class="mask"></div> 
+	 	<div class="shade1">
+	   		<p></p>
+		</div>	
+	</body>	
+</html>
+<script src="../js/flexible.js"></script>
+<script src="../js/jquery-3.2.1.min.js"></script>
+<script src="../js/api.js"></script>  
+<script src="../js/checkLogin.js"></script> 
+<script>
+(function () {
+	//获取Id
+	function getId(){
+	    var url = window.location.href;
+	    return url.split("#")[1];	
+	}
+	
+	$('.agree').on('click',function(){
+		if($(this).children('img').attr('src') == "../image/noChecked.png"){
+			$(this).children('img').attr('src','../image/checked.png');
+			$('.mainBtn').show();
+			$('.mainBtnInvalid').hide();
+		}else{
+			$(this).children('img').attr('src','../image/noChecked.png');
+			$('.mainBtn').hide();
+			$('.mainBtnInvalid').show();
+		}
+	})
+
+	$('.mainBtn').on('click',function(){ 
+		xjcong.api.vote({designsId:getId(),seasonCount:1,checkFlag:1},{},function(opt){
+			if(opt.success){
+				window.location.href="worksDetails.html#"+getId()+"#true";		
+			}else{
+				toast(opt.errMsg);
+ 				$(".shade1").css('top','12.777777rem');
+			}
+		})	 
+		
+		
+	});
+  
+})()
+</script>
+	
+

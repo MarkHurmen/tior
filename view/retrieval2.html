@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=no">
+	    <title>找回密码</title>
+	    <link rel="stylesheet" type="text/css" href="../css/register.css"/>
+	    <script src="../js/flexible.js"></script>
+	    <script src="../js/jquery-3.2.1.min.js"></script>
+	    <script src="../js/api.js"></script>  
+	</head>
+	<body>
+		<form action="" id="forget">
+			<div id="verification" style="display: none;">
+				<p>验证码已发送至 <span>18826531245</span></p>
+			</div>
+			<div class="content">
+				<ul>
+					<li>
+						<input type="text" name="" id="phone" value="" placeholder="请输入手机号"/>
+					</li>
+					<li class="verify">
+						<input type="text" name="" id="code" value="" placeholder="请输入验证码"/>
+						<input id="obtainBtn" type="button" value="获取验证码"> 
+					</li>
+					<li id="password">
+						<input type="password" name="" id="passwords" value="" placeholder="设置新密码（6-18位字母数字组合）"/>
+						<p class="eyesBtn"><img id="eyes" src="../image/close_eyes.png"/></p>
+					</li>
+				</ul>
+				<div class="registerBtn">
+					<p class="mainBtn" style="display: none;">确定</p>
+		    		<p class="mainBtnInvalid" >确定</p>
+				</div>		
+			</div>	
+			<div id="mask" class="mask"></div> 
+			<div class="loginSuccess" style="display: none;">
+				<p>密码修改成功！</p>
+				<div class="choice">
+					<span >返回首页</span>
+					<span class="choiceBtn">实名认证</span>
+				</div>
+			</div>
+		</form>
+		 <div class="shade">
+        	<p></p>
+   		</div>		
+	</body>
+</html>
+<script type="text/javascript">
+(function () {
+	//延时定时器id
+	var timer1 = null;
+	//间歇定时器id
+	var timer2 = null;
+	//手机号得验证
+	$("#phone").blur(function() {
+		var phone = $("#phone").val();
+		if (!/^1(3|4|5|7|8)\d{9}$/.test(phone)) {
+			clearTimeout(timer1);
+			$(".shade").css("display","block");
+			$(".shade > p").html("手机号格式有误");
+			setTimeOut();
+		}
+	});
+	
+	//密码长度的验证
+	$("#passwords").blur(function() {
+		var passwords = $("#passwords").val();
+		if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,18}$/.test(passwords)) {
+			console.log(passwords);
+			$(".shade").css("display","block");
+			$(".shade > p").html("密码不符合要求");
+			setTimeOut();
+		} 
+	});
+
+	//控制密码的显示与隐藏
+	$('.eyesBtn').on('click',function(){
+		if ($(this).children().attr('src') == '../image/close_eyes.png') {
+			$(this).siblings().attr('type','text');
+			$(this).children().attr('src','../image/open_eyes.png');
+		} else{
+			$(this).children().attr('src','../image/close_eyes.png');
+			$(this).siblings().attr('type','password');
+		}
+	})	
+	//显示遮罩层  
+	function showMask(){     
+        $("#mask").css("height",$(document).height());     
+        $("#mask").css("width",$(document).width());     
+        $("#mask").show();     
+    }  
+   //隐藏遮罩层  
+   function hideMask(){     	          
+       $("#mask").hide();     
+   } 
+   //修改成功跳转
+    $('.choiceBtn').siblings().on('click',function(){
+    	window.location.href="../index.html#0";
+   })
+   $('.choiceBtn').on('click',function(){
+	   window.location.href="popup.html";
+   })
+   
+	$(".mainBtn").on('click',function(){		
+		xjcong.api.updatePwd({phoneNo:$('#phone').val(),password:$('#passwords').val(),code:$('#code').val(),InvitationCode:""},{},function(opt){
+			if(opt.success){
+				xjcong.api.queryByIndex({seasonCount:1},{},function(opt){
+					if(opt.flag == 1 && opt.currentStage ==1){
+						window.location.href="upload1.html"; 
+					}else{
+						$(".shade").css("display","block");
+						$(".shade > p").html("修改成功！");
+						timer1 = setTimeout(function() {
+							$(".shade").css("display","none");
+							clearTimeout(timer1);
+							window.location.href = "register.html";
+						}, 1000);
+					}
+				})	
+			} else {
+				$(".shade").css("display","block");
+				$(".shade > p").html(opt.errMsg);
+				setTimeOut ();
+			}
+		})	
+	})
+   	var num = 60;
+   	var ob_btn = document.getElementById("obtainBtn");
+	//获取验证码
+	$("#obtainBtn").on('click',function(){	
+		//当手机号格式有误或为空，无法获取验证
+		if (!/^1(3|4|5|7|8)\d{9}$/.test($("#phone").val()) || $("#phone").val().trim().length == 0 ) {
+			$(".shade").css("display","block");
+			$(".shade > p").html("手机号格式有误");
+			setTimeOut ();
+			return;
+		}   
+		clearInterval(timer2);
+		ob_btn.disabled= true;
+		$(this).css("background-color","buttonface");
+		timer2 = setInterval(function() {			
+			num --;
+			$("#obtainBtn").val(num+"s");			
+			if (num == 0) {
+				ob_btn.disabled = false ;
+				$("#obtainBtn").css("background-color","#FFF6DA");
+				$("#obtainBtn").val("重新获取");
+				clearInterval(timer2);
+				num = 60;
+			}
+		},1000);
+
+		if($('#phone').val() != "" && (/^1(3|4|5|7|8)\d{9}$/.test($('#phone').val()))){
+			xjcong.api.sendValidateCode2({phoneNo:$('#phone').val()},{},function(opt){
+				if(opt.success){
+					//当手机号正确显示验证码已发送，
+					clearTimeout(timer1);
+					$('#verification').show();
+					$('#verification').children().children('span').text($('#phone').val());
+					timer1 = setTimeout(function() {
+						$('#verification').hide();
+						clearTimeout(timer1);
+					}, 5000);					
+				} else {
+					$(".shade").css("display","block");
+					$(".shade > p").html(opt.errMsg);
+					setTimeOut ();
+				}
+			})	
+		}else{
+			$(".shade").css("display","block");
+			$(".shade > p").html("手机号格式有误");
+			setTimeOut ();
+		}
+	})
+	//延时定时器函数
+	function setTimeOut () {
+		clearTimeout(timer1);
+		timer1 = setTimeout(function() {
+			$(".shade").css("display","none");
+			clearTimeout(timer1);
+		}, 1000);
+	}
+	//控制注册按钮的颜色变化
+	$("#phone").on("input",function() {
+		registerToggle ();
+	});
+	$("#code").on("input",function() {
+		registerToggle ();
+	});
+	$("#passwords").on("input",function() {
+		 registerToggle ();
+	});
+	//控制注册按钮的颜色变化
+	function registerToggle () {
+		 if(
+	    	$('#code').val() != "" &&
+	    	/^1(3|4|5|7|8)\d{9}$/.test($("#phone").val())&&
+	    	/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,18}$/.test($('#passwords').val())
+		 ){
+	    		$('.mainBtnInvalid').hide();
+	    		$('.mainBtn').show();
+		} else {
+			    $('.mainBtnInvalid').show();
+			    $('.mainBtn').hide();
+		}
+	}
+		
+})()
+</script>
+
